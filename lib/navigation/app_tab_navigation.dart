@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
 import '../dashboard_screen.dart';
-import '../pending_tasks_screen.dart';
+import '../profile_screen.dart';
 import '../routine_screen.dart';
 import '../stats_screen.dart';
+import '../task_screen.dart';
 import '../widgets/app_bottom_nav_bar.dart';
 
 void navigateFromTabSelection(
@@ -19,13 +20,16 @@ void navigateFromTabSelection(
       destination = const DashboardScreen();
       break;
     case AppTab.tasks:
-      destination = const PendingTasksScreen();
+      destination = const TaskScreen();
       break;
     case AppTab.routines:
       destination = const RoutineScreen();
       break;
     case AppTab.stats:
       destination = const StatsScreen();
+      break;
+    case AppTab.account:
+      destination = const ProfileScreen();
       break;
   }
 

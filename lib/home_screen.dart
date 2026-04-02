@@ -44,7 +44,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<bool> _checkUserExistsInDatabase() async {
     // TODO: Implement DB user existence check.
-    return false;
+    // Temporary behavior: always show splash and enter the app.
+    return true;
   }
 
   void _onGetStartedPressed() {

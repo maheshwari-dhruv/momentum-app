@@ -10,13 +10,10 @@ class StatsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFF020B1F),
-      appBar: AppBar(
-        backgroundColor: const Color(0xFF020B1F),
-        foregroundColor: Colors.white,
-        title: const Text('Stats'),
-      ),
-      body: const Center(
-        child: Text('Stats Screen', style: TextStyle(color: Colors.white)),
+      body: const SafeArea(
+        child: Center(
+          child: Text('Stats Screen', style: TextStyle(color: Colors.white)),
+        ),
       ),
       bottomNavigationBar: AppBottomNavBar(
         currentTab: AppTab.stats,

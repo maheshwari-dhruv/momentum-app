@@ -10,13 +10,10 @@ class RoutineScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFF020B1F),
-      appBar: AppBar(
-        backgroundColor: const Color(0xFF020B1F),
-        foregroundColor: Colors.white,
-        title: const Text('Routines'),
-      ),
-      body: const Center(
-        child: Text('Routine Screen', style: TextStyle(color: Colors.white)),
+      body: const SafeArea(
+        child: Center(
+          child: Text('Routine Screen', style: TextStyle(color: Colors.white)),
+        ),
       ),
       bottomNavigationBar: AppBottomNavBar(
         currentTab: AppTab.routines,

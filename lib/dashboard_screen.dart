@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import 'navigation/app_tab_navigation.dart';
-import 'routine_screen.dart';
 import 'widgets/app_bottom_nav_bar.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -85,8 +84,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       ),
                     ],
                   ),
-                  const Spacer(),
-                  const ProfileIconButton(),
                 ],
               ),
               const SizedBox(height: 20),
@@ -181,12 +178,21 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 onTap: () => _goToRoutine(context),
               ),
               const SizedBox(height: 24),
-              Text(
-                'Pending Tasks',
-                style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w700,
-                ),
+              Row(
+                children: [
+                  Text(
+                    'Pending Tasks',
+                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  const Spacer(),
+                  TextButton(
+                    onPressed: () => _goToPendingTasks(context),
+                    child: const Text('See All'),
+                  ),
+                ],
               ),
               const SizedBox(height: 10),
               GridView.count(
@@ -244,9 +250,19 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 
   void _goToRoutine(BuildContext context) {
-    Navigator.of(
+    navigateFromTabSelection(
       context,
-    ).push(MaterialPageRoute<void>(builder: (_) => const RoutineScreen()));
+      currentTab: AppTab.home,
+      selectedTab: AppTab.routines,
+    );
+  }
+
+  void _goToPendingTasks(BuildContext context) {
+    navigateFromTabSelection(
+      context,
+      currentTab: AppTab.home,
+      selectedTab: AppTab.tasks,
+    );
   }
 
   void _markTaskAsComplete(int index) {

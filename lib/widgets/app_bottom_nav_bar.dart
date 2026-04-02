@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../profile_screen.dart';
-
-enum AppTab { home, tasks, routines, stats }
+enum AppTab { home, tasks, routines, stats, account }
 
 class AppBottomNavBar extends StatelessWidget {
   const AppBottomNavBar({
@@ -28,31 +26,8 @@ class AppBottomNavBar extends StatelessWidget {
         BottomNavigationBarItem(icon: Icon(Icons.task_alt_rounded), label: 'Task'),
         BottomNavigationBarItem(icon: Icon(Icons.cached_rounded), label: 'Routine'),
         BottomNavigationBarItem(icon: Icon(Icons.bar_chart_rounded), label: 'Stats'),
+        BottomNavigationBarItem(icon: Icon(Icons.person_outline_rounded), label: 'Account'),
       ],
-    );
-  }
-}
-
-class ProfileIconButton extends StatelessWidget {
-  const ProfileIconButton({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.of(
-          context,
-        ).push(MaterialPageRoute<void>(builder: (_) => const ProfileScreen()));
-      },
-      child: Container(
-        width: 38,
-        height: 38,
-        decoration: BoxDecoration(
-          color: const Color(0xFF1C2A47),
-          borderRadius: BorderRadius.circular(19),
-        ),
-        child: const Icon(Icons.person_outline_rounded, color: Colors.white),
-      ),
     );
   }
 }
