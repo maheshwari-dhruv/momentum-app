@@ -20,6 +20,7 @@ class _AddNewCategoryScreenState extends State<AddNewCategoryScreen> {
   ];
 
   int _selectedColorIndex = 0;
+  bool _isRoutineCategory = false;
 
   @override
   void dispose() {
@@ -81,6 +82,73 @@ class _AddNewCategoryScreenState extends State<AddNewCategoryScreen> {
                           borderRadius: BorderRadius.circular(18),
                           borderSide: BorderSide.none,
                         ),
+                      ),
+                    ),
+                    const SizedBox(height: 28),
+                    _buildLabel('Routine Category'),
+                    const SizedBox(height: 10),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF161E2B),
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  _isRoutineCategory = true;
+                                });
+                                debugPrint(
+                                  'AddNewCategoryScreen: routine category -> Yes',
+                                );
+                              },
+                              child: Container(
+                                margin: const EdgeInsets.all(4),
+                                padding: const EdgeInsets.symmetric(vertical: 14),
+                                decoration: BoxDecoration(
+                                  color: _isRoutineCategory
+                                      ? const Color(0xFF2F80ED)
+                                      : Colors.transparent,
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                alignment: Alignment.center,
+                                child: const Text(
+                                  'Yes',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  _isRoutineCategory = false;
+                                });
+                                debugPrint(
+                                  'AddNewCategoryScreen: routine category -> No',
+                                );
+                              },
+                              child: Container(
+                                margin: const EdgeInsets.all(4),
+                                padding: const EdgeInsets.symmetric(vertical: 14),
+                                decoration: BoxDecoration(
+                                  color: !_isRoutineCategory
+                                      ? const Color(0xFF2F80ED)
+                                      : Colors.transparent,
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                alignment: Alignment.center,
+                                child: const Text(
+                                  'No',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                     const SizedBox(height: 28),
@@ -184,6 +252,7 @@ class _AddNewCategoryScreenState extends State<AddNewCategoryScreen> {
     final selectedColor = _colorOptions[_selectedColorIndex];
     debugPrint('AddNewCategoryScreen: saving category with values');
     debugPrint('categoryName: ${_categoryNameController.text}');
+    debugPrint('isRoutineCategory: $_isRoutineCategory');
     debugPrint('categoryColor: ${_colorToHex(selectedColor)}');
     // TODO: Implement category save logic.
     return true;

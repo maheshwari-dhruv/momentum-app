@@ -12,15 +12,12 @@ class TaskScreen extends StatefulWidget {
 }
 
 class _TaskScreenState extends State<TaskScreen> {
-  int _selectedFilterIndex = 0;
+  int? _selectedFilterIndex;
+  bool? _selectedFilterExpanded = true;
   bool _todayExpanded = true;
-  bool _tomorrowExpanded = true;
-  bool _pastDaysExpanded = true;
-  bool _upcomingExpanded = true;
   bool _completedExpanded = false;
 
   final List<String> _filters = const [
-    'All',
     'Work',
     'Personal',
     'Fitness',
@@ -35,42 +32,42 @@ class _TaskScreenState extends State<TaskScreen> {
   void initState() {
     super.initState();
     _tasks = _buildMockTasks();
-    _shiftTodayTasksToTomorrowAfterDayPasses();
-    _shiftTomorrowTasksToPastDaysAfterDayPasses();
-    _shiftUpcomingTasksToTodayWhenDateMatches();
   }
 
   @override
   Widget build(BuildContext context) {
     final today = _dateOnly(DateTime.now());
-    final tomorrow = today.add(const Duration(days: 1));
+    final selectedFilter = _getSelectedFilter();
+    final dailyCompletedTasks = _tasks
+        .where(
+          (task) => task.isCompleted && _isSameDate(task.dueDate, today),
+        )
+        .toList();
+    final dailyTotalTaskCount = _tasks
+        .where((task) => _isSameDate(task.dueDate, today))
+        .length;
+    final dailyCompletedTaskCount = dailyCompletedTasks.length;
+    final dailyProgress = dailyTotalTaskCount == 0
+        ? 0.0
+        : dailyCompletedTaskCount / dailyTotalTaskCount;
 
-    final todayTasks = _tasks
+    final allTodayTasks = _tasks
         .where(
           (task) =>
               !task.isCompleted && _isSameDate(task.dueDate, today),
         )
         .toList();
-    final tomorrowTasks = _tasks
-        .where(
-          (task) =>
-              !task.isCompleted && _isSameDate(task.dueDate, tomorrow),
-        )
-        .toList();
-    final pastDaysTasks = _tasks
-        .where(
-          (task) =>
-              !task.isCompleted && _dateOnly(task.dueDate).isBefore(today),
-        )
-        .toList();
-    final upcomingTasks = _tasks
-        .where(
-          (task) =>
-              !task.isCompleted &&
-              _dateOnly(task.dueDate).isAfter(tomorrow),
-        )
-        .toList();
-    final completedTasks = _tasks.where((task) => task.isCompleted).toList();
+    final selectedFilterTasks = selectedFilter == null
+        ? <_TaskItem>[]
+        : allTodayTasks
+              .where((task) => _matchesFilter(task, selectedFilter))
+              .toList();
+    final todayTasks = selectedFilter == null
+        ? allTodayTasks
+        : allTodayTasks
+              .where((task) => !_matchesFilter(task, selectedFilter))
+              .toList();
+    final completedTasks = dailyCompletedTasks;
 
     return Scaffold(
       backgroundColor: const Color(0xFF020B1F),
@@ -105,6 +102,71 @@ class _TaskScreenState extends State<TaskScreen> {
                     ),
                   ),
                 ],
+              ),
+              const SizedBox(height: 18),
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: const Color(0xFF0F1726),
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(color: const Color(0xFF17243B)),
+                ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            '$dailyCompletedTaskCount / $dailyTotalTaskCount tasks',
+                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                              color: Colors.white70,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            'Completed today',
+                            style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                    SizedBox(
+                      width: 54,
+                      height: 54,
+                      child: Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          SizedBox(
+                            width: 54,
+                            height: 54,
+                            child: CircularProgressIndicator(
+                              value: dailyProgress.clamp(0.0, 1.0),
+                              strokeWidth: 6,
+                              backgroundColor: const Color(0xFF1E293B),
+                              valueColor: const AlwaysStoppedAnimation<Color>(
+                                Color(0xFF3B82F6),
+                              ),
+                            ),
+                          ),
+                          Text(
+                            '${(dailyProgress.clamp(0.0, 1.0) * 100).round()}%',
+                            style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
               const SizedBox(height: 22),
               SizedBox(
@@ -148,20 +210,22 @@ class _TaskScreenState extends State<TaskScreen> {
                 ),
               ),
               const SizedBox(height: 24),
+              if (selectedFilter != null && selectedFilterTasks.isNotEmpty) ...[
+                _TaskSection(
+                  title: selectedFilter,
+                  count: selectedFilterTasks.length,
+                  isExpanded: _selectedFilterExpanded ?? true,
+                  onToggle: () {
+                    setState(() {
+                      _selectedFilterExpanded = !(_selectedFilterExpanded ?? true);
+                    });
+                  },
+                  tasks: selectedFilterTasks,
+                ),
+                const SizedBox(height: 18),
+              ],
               _TaskSection(
-                title: 'Upcoming',
-                count: upcomingTasks.length,
-                isExpanded: _upcomingExpanded,
-                onToggle: () {
-                  setState(() {
-                    _upcomingExpanded = !_upcomingExpanded;
-                  });
-                },
-                tasks: upcomingTasks,
-              ),
-              const SizedBox(height: 18),
-              _TaskSection(
-                title: 'Today',
+                title: 'Todo Tasks',
                 count: todayTasks.length,
                 isExpanded: _todayExpanded,
                 onToggle: () {
@@ -170,30 +234,6 @@ class _TaskScreenState extends State<TaskScreen> {
                   });
                 },
                 tasks: todayTasks,
-              ),
-              const SizedBox(height: 18),
-              _TaskSection(
-                title: 'Tomorrow',
-                count: tomorrowTasks.length,
-                isExpanded: _tomorrowExpanded,
-                onToggle: () {
-                  setState(() {
-                    _tomorrowExpanded = !_tomorrowExpanded;
-                  });
-                },
-                tasks: tomorrowTasks,
-              ),
-              const SizedBox(height: 18),
-              _TaskSection(
-                title: 'Past Days',
-                count: pastDaysTasks.length,
-                isExpanded: _pastDaysExpanded,
-                onToggle: () {
-                  setState(() {
-                    _pastDaysExpanded = !_pastDaysExpanded;
-                  });
-                },
-                tasks: pastDaysTasks,
               ),
               const SizedBox(height: 18),
               _TaskSection(
@@ -234,9 +274,25 @@ class _TaskScreenState extends State<TaskScreen> {
 
   void _onFilterSelected(int index) {
     setState(() {
-      _selectedFilterIndex = index;
+      _selectedFilterIndex = _selectedFilterIndex == index ? null : index;
+      _selectedFilterExpanded = true;
     });
-    // TODO: Implement task filtering logic.
+  }
+
+  String? _getSelectedFilter() {
+    if (_selectedFilterIndex == null) {
+      return null;
+    }
+
+    if (_selectedFilterIndex! < 0 || _selectedFilterIndex! >= _filters.length) {
+      return null;
+    }
+
+    return _filters[_selectedFilterIndex!];
+  }
+
+  bool _matchesFilter(_TaskItem task, String filter) {
+    return task.category.toLowerCase() == filter.toLowerCase();
   }
 
   void _onAddTaskPressed() {
@@ -336,17 +392,6 @@ class _TaskScreenState extends State<TaskScreen> {
         first.day == second.day;
   }
 
-  void _shiftTodayTasksToTomorrowAfterDayPasses() {
-    // TODO: Implement rollover logic to update expired today tasks.
-  }
-
-  void _shiftTomorrowTasksToPastDaysAfterDayPasses() {
-    // TODO: Implement rollover logic to move expired tomorrow tasks to past days.
-  }
-
-  void _shiftUpcomingTasksToTodayWhenDateMatches() {
-    // TODO: Implement rollover logic to move matching upcoming tasks into today.
-  }
 }
 
 class _TaskItem {
