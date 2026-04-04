@@ -14,7 +14,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  static const bool _holdOnSplashScreenForUiUpdate = true;
+  static const bool _holdOnSplashScreenForUiUpdate = false;
 
   @override
   void initState() {
