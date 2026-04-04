@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
 
-class UserSetupScreen extends StatefulWidget {
-  const UserSetupScreen({super.key, required this.onSaveSuccess});
+class AddUserScreen extends StatefulWidget {
+  const AddUserScreen({
+    super.key,
+    required this.onSaveSuccess,
+    required this.onSaveFailed,
+  });
 
   final VoidCallback onSaveSuccess;
+  final VoidCallback onSaveFailed;
 
   @override
-  State<UserSetupScreen> createState() => _UserSetupScreenState();
+  State<AddUserScreen> createState() => _AddUserScreenState();
 }
 
-class _UserSetupScreenState extends State<UserSetupScreen> {
+class _AddUserScreenState extends State<AddUserScreen> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _heightController = TextEditingController();
@@ -29,7 +34,9 @@ class _UserSetupScreenState extends State<UserSetupScreen> {
     if (!mounted) return;
     if (saved) {
       widget.onSaveSuccess();
+      return;
     }
+    widget.onSaveFailed();
   }
 
   Future<bool> _saveUserDetailsToDatabase() async {

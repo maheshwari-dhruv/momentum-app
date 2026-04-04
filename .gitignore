@@ -19,6 +19,8 @@ migrate_working_dir/
 .idea/
 stitch_momentum_app/
 lib/core/
+assets/
+extra.txt
 
 # The .vscode folder contains launch configuration and tasks you configure in
 # VS Code which you may wish to be included in version control, so this line
