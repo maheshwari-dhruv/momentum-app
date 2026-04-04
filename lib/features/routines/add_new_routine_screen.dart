@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'add_new_category_screen.dart';
+import '../tasks/add_new_category_screen.dart';
 
 class AddNewRoutineScreen extends StatefulWidget {
   const AddNewRoutineScreen({super.key});

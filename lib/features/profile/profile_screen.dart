@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'navigation/app_tab_navigation.dart';
-import 'widgets/app_bottom_nav_bar.dart';
+import '../../app/navigation/app_tab_navigation.dart';
+import '../../shared/widgets/app_bottom_nav_bar.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});

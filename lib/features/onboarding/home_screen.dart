@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'dashboard_screen.dart';
+
+import '../dashboard/dashboard_screen.dart';
 import 'user_setup_screen.dart';
 import 'welcome_screen.dart';
 
@@ -45,7 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<bool> _checkUserExistsInDatabase() async {
     // TODO: Implement DB user existence check.
     // Temporary behavior: always show splash and enter the app.
-    return true;
+    return false;
   }
 
   void _onGetStartedPressed() {

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../app/navigation/app_tab_navigation.dart';
+import '../../shared/widgets/app_bottom_nav_bar.dart';
 import 'add_new_routine_screen.dart';
-import 'navigation/app_tab_navigation.dart';
-import 'widgets/app_bottom_nav_bar.dart';
 
 class RoutineScreen extends StatefulWidget {
   const RoutineScreen({super.key});
@@ -294,7 +294,7 @@ class _RoutineScreenState extends State<RoutineScreen> {
                       ),
                     );
                   },
-                  separatorBuilder: (_, __) => const SizedBox(width: 10),
+                  separatorBuilder: (context, index) => const SizedBox(width: 10),
                   itemCount: routineTabs.length,
                 ),
               ),
@@ -405,7 +405,7 @@ class _RoutineScreenState extends State<RoutineScreen> {
     debugPrint('RoutineScreen: add new routine tapped');
     Navigator.of(context).push(
       MaterialPageRoute<void>(
-          builder: (_) => const AddNewRoutineScreen(),
+        builder: (_) => const AddNewRoutineScreen(),
       ),
     );
   }
@@ -750,7 +750,7 @@ class _RoutineListCard extends StatelessWidget {
                 width: 2,
               ),
               color: showCompletedStyle
-                  ? const Color(0xFF22C55E).withOpacity(0.12)
+                  ? const Color(0xFF22C55E).withValues(alpha: 0.12)
                   : Colors.transparent,
             ),
             child: showCompletedStyle

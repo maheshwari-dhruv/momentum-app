@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import 'navigation/app_tab_navigation.dart';
-import 'widgets/app_bottom_nav_bar.dart';
+import '../../app/navigation/app_tab_navigation.dart';
+import '../../shared/widgets/app_bottom_nav_bar.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -446,7 +446,7 @@ class _TaskCard extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 decoration: BoxDecoration(
-                  color: tagColor.withOpacity(0.2),
+                  color: tagColor.withValues(alpha: 0.2),
                   borderRadius: BorderRadius.circular(6),
                 ),
                 child: Text(

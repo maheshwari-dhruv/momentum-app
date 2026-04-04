@@ -184,7 +184,7 @@ class _AddNewCategoryScreenState extends State<AddNewCategoryScreen> {
                               boxShadow: isSelected
                                   ? [
                                       BoxShadow(
-                                        color: color.withOpacity(0.35),
+                                        color: color.withValues(alpha: 0.35),
                                         blurRadius: 10,
                                         spreadRadius: 2,
                                       ),
@@ -259,7 +259,7 @@ class _AddNewCategoryScreenState extends State<AddNewCategoryScreen> {
   }
 
   String _colorToHex(Color color) {
-    final value = color.value.toRadixString(16).padLeft(8, '0');
+    final value = color.toARGB32().toRadixString(16).padLeft(8, '0');
     return '#${value.substring(2).toUpperCase()}';
   }
 }

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../app/navigation/app_tab_navigation.dart';
+import '../../shared/widgets/app_bottom_nav_bar.dart';
 import 'add_task_screen.dart';
-import 'navigation/app_tab_navigation.dart';
-import 'widgets/app_bottom_nav_bar.dart';
 
 class TaskScreen extends StatefulWidget {
   const TaskScreen({super.key});
@@ -205,7 +205,7 @@ class _TaskScreenState extends State<TaskScreen> {
                       ),
                     );
                   },
-                  separatorBuilder: (_, __) => const SizedBox(width: 10),
+                  separatorBuilder: (context, index) => const SizedBox(width: 10),
                   itemCount: _filters.length,
                 ),
               ),
@@ -391,7 +391,6 @@ class _TaskScreenState extends State<TaskScreen> {
         first.month == second.month &&
         first.day == second.day;
   }
-
 }
 
 class _TaskItem {
@@ -536,7 +535,7 @@ class _TaskListCard extends StatelessWidget {
                 width: 2,
               ),
               color: showCompletedStyle
-                  ? const Color(0xFF22C55E).withOpacity(0.12)
+                  ? const Color(0xFF22C55E).withValues(alpha: 0.12)
                   : Colors.transparent,
             ),
             child: showCompletedStyle
