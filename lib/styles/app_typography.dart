@@ -4,11 +4,52 @@ class AppTypography {
   const AppTypography._();
 
   static const String fontFamily = 'AeonikTRIAL';
-  static const TextStyle splashTitle = TextStyle(
+
+  // Splash Screen
+  static TextStyle get splashTitle => const TextStyle(
     fontFamily: fontFamily,
     fontSize: 22,
     fontWeight: FontWeight.w500,
     letterSpacing: 0.5,
+    color: Colors.white,
+  );
+
+  // Get Started Screen
+  static TextStyle get getStartedMutedWord => const TextStyle(
+    fontFamily: fontFamily,
+    fontSize: 30,
+    fontWeight: FontWeight.w500,
+    letterSpacing: 0,
+    color: Colors.white,
+  ).copyWith(
+    color: Colors.white.withValues(alpha: 0.4),
+  );
+  static TextStyle get getStartedMainWord => const TextStyle(
+    fontFamily: fontFamily,
+    fontSize: 32.5,
+    fontWeight: FontWeight.w600,
+    letterSpacing: 0,
+    color: Colors.white,
+  );
+  static TextStyle get getStartedHeadline => const TextStyle(
+    fontFamily: fontFamily,
+    fontSize: 28,
+    fontWeight: FontWeight.w500,
+    height: 1.2,
+    letterSpacing: 0.5,
+    color: Colors.white,
+  );
+  static TextStyle get getStartedBody => const TextStyle(
+    fontFamily: fontFamily,
+    fontSize: 16,
+    fontWeight: FontWeight.w300,
+    height: 1.5,
+    color: Color(0x73FFFFFF),
+  );
+  static TextStyle get getStartedButtonText => const TextStyle(
+    fontFamily: fontFamily,
+    fontSize: 17.5,
+    fontWeight: FontWeight.w500,
     color: Colors.white,
   );
 

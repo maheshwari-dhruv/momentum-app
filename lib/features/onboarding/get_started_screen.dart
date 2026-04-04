@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../styles/app_icons.dart';
+import '../../styles/app_typography.dart';
 import '../dashboard/dashboard_screen.dart';
 import 'add_user_screen.dart';
 
@@ -9,61 +11,79 @@ class GetStartedScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        width: double.infinity,
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color(0xFF0B1E3E),
-              Color(0xFF081632),
-              Color(0xFF050B1A),
-              Color(0xFF020612),
-            ],
-          ),
-        ),
-        child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 28),
-            child: Column(
-              children: [
-                const Spacer(),
-                Text(
-                  'Track Your Progress',
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-                const SizedBox(height: 12),
-                Text(
-                  'Watch your productivity rise with detailed analytics and streak tracking.',
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    color: Colors.white70,
-                    height: 1.4,
-                  ),
-                ),
-                const SizedBox(height: 28),
-                SizedBox(
+      backgroundColor: Colors.transparent,
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+          child: Column(
+            children: [
+              Expanded(
+                child: Container(
                   width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () => _openAddUserScreen(context),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF3B82F6),
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(14),
+                  padding: const EdgeInsets.only(top: 55),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const _MutedWord(text: 'Tasks'),
+                      const SizedBox(height: 25),
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          AppIcons.getStartedWorkoutIcon,
+                          const SizedBox(width: 10),
+                          Text(
+                            'Workout',
+                            style: AppTypography.getStartedMainWord
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 25),
+                      const _MutedWord(text: 'Routine'),
+                    ],
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 35),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Your routines,\nupgraded',
+                      style: AppTypography.getStartedHeadline,
+                    ),
+                    const SizedBox(height: 25),
+                    Text(
+                      'Build better habits, stay consistent, and keep everything in one place.',
+                      style: AppTypography.getStartedBody,
+                    ),
+                    const SizedBox(height: 30),
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton.icon(
+                        onPressed: () => _openAddUserScreen(context),
+                        icon: AppIcons.getStartedCtaIcon,
+                        iconAlignment: IconAlignment.end,
+                        label: const Text('Get Started'),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.white.withValues(alpha: 0.095),
+                          foregroundColor: Colors.white,
+                          padding: const EdgeInsets.symmetric(vertical: 20),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          side: BorderSide(
+                            color: Colors.white.withValues(alpha: 0.25),
+                          ),
+                          elevation: 0,
+                          textStyle: AppTypography.getStartedButtonText,
+                        ),
                       ),
                     ),
-                    child: const Text('Get Started'),
-                  ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
@@ -91,6 +111,20 @@ class GetStartedScreen extends StatelessWidget {
         builder: (_) => const DashboardScreen(),
       ),
       (route) => false,
+    );
+  }
+}
+
+class _MutedWord extends StatelessWidget {
+  const _MutedWord({required this.text});
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      text,
+      style: AppTypography.getStartedMutedWord,
     );
   }
 }
