@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
 
 import '../../app/navigation/app_tab_navigation.dart';
-import '../../shared/widgets/app_bottom_nav_bar.dart';
+import '../../shared/widgets/app_tab_scaffold.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return AppTabScaffold(
+      currentTab: AppTab.account,
+      onTabSelected: (selected) {
+        navigateFromTabSelection(
+          context,
+          currentTab: AppTab.account,
+          selectedTab: selected,
+        );
+      },
       backgroundColor: const Color(0xFF020B1F),
       body: SafeArea(
         child: Padding(
@@ -108,16 +116,6 @@ class ProfileScreen extends StatelessWidget {
             ],
           ),
         ),
-      ),
-      bottomNavigationBar: AppBottomNavBar(
-        currentTab: AppTab.account,
-        onTabSelected: (selected) {
-          navigateFromTabSelection(
-            context,
-            currentTab: AppTab.account,
-            selectedTab: selected,
-          );
-        },
       ),
     );
   }

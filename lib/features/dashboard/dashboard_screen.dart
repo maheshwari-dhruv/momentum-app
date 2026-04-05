@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../../app/navigation/app_tab_navigation.dart';
-import '../../shared/widgets/app_bottom_nav_bar.dart';
+import '../../shared/widgets/app_tab_scaffold.dart';
+import '../../styles/app_typography.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -54,38 +55,66 @@ class _DashboardScreenState extends State<DashboardScreen> {
       _WeeklyProgressPoint(label: 'S', completed: 1, total: 5),
     ];
 
-    return Scaffold(
-      backgroundColor: const Color(0xFF020B1F),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(18, 18, 18, 26),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        dateText,
-                        style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                          color: Colors.white70,
-                          letterSpacing: 1.0,
-                        ),
+    return AppTabScaffold(
+      currentTab: AppTab.home,
+      onTabSelected: (selected) {
+        navigateFromTabSelection(
+          context,
+          currentTab: AppTab.home,
+          selectedTab: selected,
+        );
+      },
+      backgroundColor: Colors.transparent,
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.fromLTRB(20, 70, 20, 40),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Welcome',
+                      style: AppTypography.darkTextTheme.titleMedium?.copyWith(
+                        color: Colors.white70,
                       ),
-                      Text(
-                        dayText,
-                        style: Theme.of(context).textTheme.headlineMedium
-                            ?.copyWith(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w700,
-                            ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      'Username',
+                      style: AppTypography.darkTextTheme.headlineLarge?.copyWith(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w700,
                       ),
-                    ],
-                  ),
-                ],
-              ),
+                    ),
+                  ],
+                ),
+                const Spacer(),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      dateText,
+                      style: AppTypography.darkTextTheme.labelLarge?.copyWith(
+                        color: Colors.white70,
+                        letterSpacing: 1.0,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      dayText,
+                      style: AppTypography.darkTextTheme.titleLarge?.copyWith(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
               const SizedBox(height: 20),
               Container(
                 width: double.infinity,
@@ -232,19 +261,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   ),
                 ),
               ),
-            ],
-          ),
+          ],
         ),
-      ),
-      bottomNavigationBar: AppBottomNavBar(
-        currentTab: AppTab.home,
-        onTabSelected: (selected) {
-          navigateFromTabSelection(
-            context,
-            currentTab: AppTab.home,
-            selectedTab: selected,
-          );
-        },
       ),
     );
   }

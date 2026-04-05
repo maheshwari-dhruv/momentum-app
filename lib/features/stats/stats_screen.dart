@@ -2,7 +2,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 import '../../app/navigation/app_tab_navigation.dart';
-import '../../shared/widgets/app_bottom_nav_bar.dart';
+import '../../shared/widgets/app_tab_scaffold.dart';
 
 class StatsScreen extends StatefulWidget {
   const StatsScreen({super.key});
@@ -59,7 +59,15 @@ class _StatsScreenState extends State<StatsScreen> {
         ? 0.0
         : content.progressValue / content.totalValue;
 
-    return Scaffold(
+    return AppTabScaffold(
+      currentTab: AppTab.stats,
+      onTabSelected: (selected) {
+        navigateFromTabSelection(
+          context,
+          currentTab: AppTab.stats,
+          selectedTab: selected,
+        );
+      },
       backgroundColor: const Color(0xFF020B1F),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -157,16 +165,6 @@ class _StatsScreenState extends State<StatsScreen> {
             ],
           ),
         ),
-      ),
-      bottomNavigationBar: AppBottomNavBar(
-        currentTab: AppTab.stats,
-        onTabSelected: (selected) {
-          navigateFromTabSelection(
-            context,
-            currentTab: AppTab.stats,
-            selectedTab: selected,
-          );
-        },
       ),
     );
   }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../app/navigation/app_tab_navigation.dart';
-import '../../shared/widgets/app_bottom_nav_bar.dart';
+import '../../shared/widgets/app_tab_scaffold.dart';
 import 'add_task_screen.dart';
 
 class TaskScreen extends StatefulWidget {
@@ -69,7 +69,15 @@ class _TaskScreenState extends State<TaskScreen> {
               .toList();
     final completedTasks = dailyCompletedTasks;
 
-    return Scaffold(
+    return AppTabScaffold(
+      currentTab: AppTab.tasks,
+      onTabSelected: (selected) {
+        navigateFromTabSelection(
+          context,
+          currentTab: AppTab.tasks,
+          selectedTab: selected,
+        );
+      },
       backgroundColor: const Color(0xFF020B1F),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -258,16 +266,6 @@ class _TaskScreenState extends State<TaskScreen> {
         foregroundColor: Colors.white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         child: const Icon(Icons.add_rounded, size: 32),
-      ),
-      bottomNavigationBar: AppBottomNavBar(
-        currentTab: AppTab.tasks,
-        onTabSelected: (selected) {
-          navigateFromTabSelection(
-            context,
-            currentTab: AppTab.tasks,
-            selectedTab: selected,
-          );
-        },
       ),
     );
   }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../app/navigation/app_tab_navigation.dart';
-import '../../shared/widgets/app_bottom_nav_bar.dart';
+import '../../shared/widgets/app_tab_scaffold.dart';
 import 'add_new_routine_screen.dart';
 
 class RoutineScreen extends StatefulWidget {
@@ -48,7 +48,15 @@ class _RoutineScreenState extends State<RoutineScreen> {
         .where((item) => item.isCompleted)
         .toList();
 
-    return Scaffold(
+    return AppTabScaffold(
+      currentTab: AppTab.routines,
+      onTabSelected: (selected) {
+        navigateFromTabSelection(
+          context,
+          currentTab: AppTab.routines,
+          selectedTab: selected,
+        );
+      },
       backgroundColor: const Color(0xFF020B1F),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -347,16 +355,6 @@ class _RoutineScreenState extends State<RoutineScreen> {
         foregroundColor: Colors.white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         child: const Icon(Icons.add_rounded, size: 32),
-      ),
-      bottomNavigationBar: AppBottomNavBar(
-        currentTab: AppTab.routines,
-        onTabSelected: (selected) {
-          navigateFromTabSelection(
-            context,
-            currentTab: AppTab.routines,
-            selectedTab: selected,
-          );
-        },
       ),
     );
   }
