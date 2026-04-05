@@ -22,4 +22,11 @@ class AppIcons {
     color: Colors.white,
     size: 20,
   );
+
+  // Add User Screen
+  static Widget get addUserBackIcon => const Icon(
+    Ionicons.arrow_back_outline,
+    color: Color(0xFFED7225),
+    size: 25,
+  );
 }

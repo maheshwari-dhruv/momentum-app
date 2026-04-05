@@ -53,6 +53,42 @@ class AppTypography {
     color: Colors.white,
   );
 
+  // Add User Screen
+  static TextStyle get addUserHeadline => const TextStyle(
+    fontFamily: fontFamily,
+    fontSize: 35,
+    fontWeight: FontWeight.w600,
+    letterSpacing: 0.5,
+    height: 0,
+    color: Color(0xFFED7225),
+  );
+  static TextStyle get addUserFieldLabel => const TextStyle(
+    fontFamily: fontFamily,
+    fontSize: 15,
+    fontWeight: FontWeight.w400,
+    letterSpacing: 0.1,
+    color: Colors.white,
+  );
+  static TextStyle get addUserTextFieldText => const TextStyle(
+    fontFamily: fontFamily,
+    fontSize: 15,
+    fontWeight: FontWeight.w400,
+    letterSpacing: 0.1,
+    color: Colors.white,
+  );
+  static TextStyle get addUserPrimaryButtonText => const TextStyle(
+    fontFamily: fontFamily,
+    fontSize: 17.5,
+    fontWeight: FontWeight.w600,
+    color: Color(0xFF110600),
+  );
+  static TextStyle get addUserSecondaryButtonText => const TextStyle(
+    fontFamily: fontFamily,
+    fontSize: 17.5,
+    fontWeight: FontWeight.w500,
+    color: Colors.white,
+  );
+
   static TextTheme lightTextTheme = _buildTextTheme(
     bodyColor: const Color(0xFF111827),
     displayColor: const Color(0xFF0F172A),
