@@ -43,8 +43,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   Widget build(BuildContext context) {
     final now = DateTime.now();
-    final dateText = DateFormat('MMM d').format(now).toUpperCase();
-    final dayText = DateFormat('EEEE').format(now);
+    final greetingText = _getGreeting(now);
+    final dateText = DateFormat('EEEE, d MMMM, y').format(now);
     final weeklyData = const <_WeeklyProgressPoint>[
       _WeeklyProgressPoint(label: 'M', completed: 2, total: 5),
       _WeeklyProgressPoint(label: 'T', completed: 3, total: 5),
@@ -71,47 +71,39 @@ class _DashboardScreenState extends State<DashboardScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Welcome',
-                      style: AppTypography.darkTextTheme.titleMedium?.copyWith(
-                        color: Colors.white70,
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        '$greetingText, Username',
+                        style: AppTypography.dashboardHeadline,
                       ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      'Username',
-                      style: AppTypography.darkTextTheme.headlineLarge?.copyWith(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w700,
+                      const SizedBox(height: 5),
+                      Text(
+                        dateText,
+                        style: AppTypography.dashboardSubtitle,
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-                const Spacer(),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Text(
-                      dateText,
-                      style: AppTypography.darkTextTheme.labelLarge?.copyWith(
-                        color: Colors.white70,
-                        letterSpacing: 1.0,
-                      ),
+                const SizedBox(width: 15),
+                Container(
+                  width: 54,
+                  height: 54,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: const Color(0xFFFFD178),
+                    border: Border.all(
+                      color: Colors.white.withValues(alpha: 0.35),
+                      width: 1.2,
                     ),
-                    const SizedBox(height: 4),
-                    Text(
-                      dayText,
-                      style: AppTypography.darkTextTheme.titleLarge?.copyWith(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ],
+                  ),
+                  alignment: Alignment.center,
+                  child: const Text('🐯', style: TextStyle(fontSize: 28)),
                 ),
               ],
             ),
@@ -289,6 +281,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
       _pendingTasks[index] = _pendingTasks[index].copyWith(isCompleted: true);
     });
     // TODO: Persist completion status in database.
+  }
+
+  String _getGreeting(DateTime dateTime) {
+    final hour = dateTime.hour;
+    if (hour < 12) return 'Morning';
+    if (hour < 17) return 'Afternoon';
+    return 'Evening';
   }
 }
 

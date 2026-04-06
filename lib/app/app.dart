@@ -11,27 +11,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Momentum App',
+      title: 'Momentum - Task & Routine Planner',
       locale: DevicePreview.locale(context),
-      builder: (context, child) {
-        final previewChild = DevicePreview.appBuilder(context, child);
-
-        return Stack(
-          fit: StackFit.expand,
-          children: [
-            const DecoratedBox(
-              decoration: BoxDecoration(
-                gradient: AppTheme.appBackgroundGradient,
-              ),
-            ),
-            previewChild,
-          ],
-        );
-      },
-      theme: AppTheme.lightTheme,
-      darkTheme: AppTheme.darkTheme,
-      themeMode: ThemeMode.dark,
-      home: const HomeScreen(title: 'Momentum App'),
+      builder: DevicePreview.appBuilder,
+      theme: AppTheme.theme,
+      home: const HomeScreen(title: 'Momentum - Task & Routine Planner'),
     );
   }
 }

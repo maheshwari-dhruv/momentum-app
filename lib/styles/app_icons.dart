@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 
+import 'app_theme.dart';
+
 class AppIcons {
   const AppIcons._();
 
   // Splash Screen
   static Widget get splashTextIcon => const Icon(
     Ionicons.flash_sharp,
-    color: Colors.white,
-    size: 25,
+    color: AppTheme.iconPrimary,
+    size: 30,
   );
 
   // Get Started Screen
