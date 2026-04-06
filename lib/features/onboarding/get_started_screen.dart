@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../styles/app_icons.dart';
+import '../../styles/app_theme.dart';
 import '../../styles/app_typography.dart';
 import '../dashboard/dashboard_screen.dart';
 import 'add_user_screen.dart';
@@ -10,81 +11,67 @@ class GetStartedScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final topPadding = MediaQuery.of(context).padding.top;
+    final bottomPadding = MediaQuery.of(context).padding.bottom;
+
     return Scaffold(
-      backgroundColor: Colors.transparent,
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
-          child: Column(
-            children: [
-              Expanded(
-                child: Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.only(top: 55),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+      body: Padding(
+        padding: EdgeInsets.fromLTRB(30, topPadding + 40, 30, bottomPadding + 20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const _MutedWord(text: 'Tasks'),
+                  const SizedBox(height: 15),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
-                      const _MutedWord(text: 'Tasks'),
-                      const SizedBox(height: 25),
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          AppIcons.getStartedWorkoutIcon,
-                          const SizedBox(width: 10),
-                          Text(
-                            'Workout',
-                            style: AppTypography.getStartedMainWord
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 25),
-                      const _MutedWord(text: 'Routine'),
+                      AppIcons.getStartedWorkoutIcon,
+                      const SizedBox(width: 10),
+                      Text('Momentum', style: AppTypography.getStartedMainWord),
                     ],
                   ),
+                  const SizedBox(height: 15),
+                  const _MutedWord(text: 'Routine'),
+                  const SizedBox(height: 15),
+                  const _MutedWord(text: 'Habits'),
+                ],
+              ),
+            ),
+            Text(
+              'Your routines,\nupgraded',
+              style: AppTypography.getStartedHeadline,
+            ),
+            const SizedBox(height: 15),
+            Text(
+              'Build better habits, stay consistent,\n& keep everything in one place.',
+              style: AppTypography.getStartedBody,
+            ),
+            const SizedBox(height: 30),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton.icon(
+                onPressed: () => _openAddUserScreen(context),
+                icon: AppIcons.getStartedCtaIcon,
+                iconAlignment: IconAlignment.end,
+                label: const Text('Get Started'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppTheme.ctaDark,
+                  foregroundColor: AppTheme.white,
+                  padding: const EdgeInsets.symmetric(vertical: 20),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  elevation: 0,
+                  textStyle: AppTypography.getStartedButtonText,
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 35),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Your routines,\nupgraded',
-                      style: AppTypography.getStartedHeadline,
-                    ),
-                    const SizedBox(height: 25),
-                    Text(
-                      'Build better habits, stay consistent, and keep everything in one place.',
-                      style: AppTypography.getStartedBody,
-                    ),
-                    const SizedBox(height: 30),
-                    SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton.icon(
-                        onPressed: () => _openAddUserScreen(context),
-                        icon: AppIcons.getStartedCtaIcon,
-                        iconAlignment: IconAlignment.end,
-                        label: const Text('Get Started'),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.white.withValues(alpha: 0.095),
-                          foregroundColor: Colors.white,
-                          padding: const EdgeInsets.symmetric(vertical: 20),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          side: BorderSide(
-                            color: Colors.white.withValues(alpha: 0.25),
-                          ),
-                          elevation: 0,
-                          textStyle: AppTypography.getStartedButtonText,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

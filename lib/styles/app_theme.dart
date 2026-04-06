@@ -15,6 +15,7 @@ class AppTheme {
   static const Color divider = Color(0xFFE9DED6);
   static const Color ctaDark = Color(0xFF7A4316);
   static const Color iconPrimary = Color(0xFF262626);
+  static const Color white = Colors.white;
 
   static ThemeData get theme => ThemeData(
     useMaterial3: true,

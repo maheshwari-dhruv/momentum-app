@@ -16,19 +16,23 @@ class AppIcons {
   // Get Started Screen
   static Widget get getStartedWorkoutIcon => const Icon(
     Ionicons.barbell_sharp,
-    color: Colors.white,
+    color: AppTheme.iconPrimary,
     size: 35,
   );
   static Widget get getStartedCtaIcon => const Icon(
     Ionicons.arrow_forward_outline,
-    color: Colors.white,
+    color: AppTheme.white,
     size: 20,
   );
 
   // Add User Screen
-  static Widget get addUserBackIcon => const Icon(
-    Ionicons.arrow_back_outline,
-    color: Color(0xFFED7225),
+  static Widget get addUserCloseIcon => const Icon(
+    Ionicons.close,
+    size: 30,
+  );
+  static Widget get addUserSaveIcon => const Icon(
+    Ionicons.bookmark,
+    color: AppTheme.white,
     size: 25,
   );
 }

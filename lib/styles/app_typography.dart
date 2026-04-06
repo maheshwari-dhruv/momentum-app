@@ -7,80 +7,7 @@ class AppTypography {
 
   static const String fontFamily = 'AeonikTRIAL';
 
-  // Get Started Screen
-  static TextStyle get getStartedMutedWord => const TextStyle(
-    fontFamily: fontFamily,
-    fontSize: 30,
-    fontWeight: FontWeight.w500,
-    letterSpacing: 0,
-    color: Colors.white,
-  ).copyWith(
-    color: Colors.white.withValues(alpha: 0.4),
-  );
-  static TextStyle get getStartedMainWord => const TextStyle(
-    fontFamily: fontFamily,
-    fontSize: 32.5,
-    fontWeight: FontWeight.w600,
-    letterSpacing: 0,
-    color: Colors.white,
-  );
-  static TextStyle get getStartedHeadline => const TextStyle(
-    fontFamily: fontFamily,
-    fontSize: 28,
-    fontWeight: FontWeight.w500,
-    height: 1.2,
-    letterSpacing: 0.5,
-    color: Colors.white,
-  );
-  static TextStyle get getStartedBody => const TextStyle(
-    fontFamily: fontFamily,
-    fontSize: 16,
-    fontWeight: FontWeight.w300,
-    height: 1.5,
-    color: Color(0x73FFFFFF),
-  );
-  static TextStyle get getStartedButtonText => const TextStyle(
-    fontFamily: fontFamily,
-    fontSize: 17.5,
-    fontWeight: FontWeight.w500,
-    color: Colors.white,
-  );
-
-  // Add User Screen
-  static TextStyle get addUserHeadline => const TextStyle(
-    fontFamily: fontFamily,
-    fontSize: 35,
-    fontWeight: FontWeight.w600,
-    letterSpacing: 0.5,
-    height: 0,
-    color: Color(0xFFED7225),
-  );
-  static TextStyle get addUserFieldLabel => const TextStyle(
-    fontFamily: fontFamily,
-    fontSize: 15,
-    fontWeight: FontWeight.w400,
-    letterSpacing: 0.1,
-    color: Colors.white,
-  );
-  static TextStyle get addUserTextFieldText => const TextStyle(
-    fontFamily: fontFamily,
-    fontSize: 15,
-    fontWeight: FontWeight.w400,
-    letterSpacing: 0.1,
-    color: Colors.white,
-  );
-  static TextStyle get addUserPrimaryButtonText => const TextStyle(
-    fontFamily: fontFamily,
-    fontSize: 17.5,
-    fontWeight: FontWeight.w600,
-    color: Color(0xFF110600),
-  );
-  static TextStyle get addUserSecondaryButtonText => const TextStyle(
-    fontFamily: fontFamily,
-    fontSize: 17.5,
-    fontWeight: FontWeight.w500,
-    color: Colors.white,
-  );
+  
 
   // Dashboard Screen
   static TextStyle get dashboardHeadline => const TextStyle(
@@ -107,6 +34,71 @@ class AppTypography {
     fontWeight: FontWeight.w700,
     letterSpacing: -0.25,
     color: AppTheme.textPrimary,
+  );
+
+  // Get Started Screen
+  static TextStyle get getStartedMutedWord => const TextStyle(
+    fontFamily: googleSansFamily,
+    fontSize: 25,
+    fontWeight: FontWeight.w400,
+    letterSpacing: -0.25,
+    color: AppTheme.muted,
+  );
+  static TextStyle get getStartedMainWord => const TextStyle(
+    fontFamily: googleSansFamily,
+    fontSize: 30,
+    fontWeight: FontWeight.w700,
+    letterSpacing: -0.25,
+    color: AppTheme.textPrimary,
+  );
+  static TextStyle get getStartedHeadline => const TextStyle(
+    fontFamily: googleSansFamily,
+    fontSize: 30,
+    fontWeight: FontWeight.w700,
+    letterSpacing: -0.25,
+    height: 1.25,
+    color: AppTheme.textPrimary,
+  );
+  static TextStyle get getStartedBody => const TextStyle(
+    fontFamily: googleSansFamily,
+    fontSize: 15,
+    fontWeight: FontWeight.w300,
+    height: 1.25,
+    color: AppTheme.muted,
+  );
+  static TextStyle get getStartedButtonText => const TextStyle(
+    fontFamily: googleSansFamily,
+    fontSize: 20,
+    fontWeight: FontWeight.w500,
+  );
+
+  // Add User Screen
+  static TextStyle get addUserHeadline => const TextStyle(
+    fontFamily: googleSansFamily,
+    fontSize: 30,
+    fontWeight: FontWeight.w700,
+    letterSpacing: -0.25,
+    height: 1.25,
+    color: AppTheme.textPrimary,
+  );
+  static TextStyle get addUserFieldLabel => const TextStyle(
+    fontFamily: googleSansFamily,
+    fontSize: 15,
+    fontWeight: FontWeight.w500,
+    letterSpacing: -0.25,
+    color: AppTheme.textSecondary,
+  );
+  static TextStyle get addUserTextFieldText => const TextStyle(
+    fontFamily: googleSansFamily,
+    fontSize: 15,
+    fontWeight: FontWeight.w400,
+    letterSpacing: -0.25,
+    color: AppTheme.textPrimary,
+  );
+  static TextStyle get getSaveButtonText => const TextStyle(
+    fontFamily: googleSansFamily,
+    fontSize: 20,
+    fontWeight: FontWeight.w500,
   );
 
   static TextTheme get textTheme => _buildTextTheme(

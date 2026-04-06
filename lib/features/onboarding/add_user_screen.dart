@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../styles/app_icons.dart';
+import '../../styles/app_theme.dart';
 import '../../styles/app_typography.dart';
+import '../../styles/app_icons.dart';
 
 class AddUserScreen extends StatefulWidget {
   const AddUserScreen({
@@ -50,9 +51,7 @@ class _AddUserScreenState extends State<AddUserScreen> {
   }
 
   void _onFieldFocusChanged() {
-    if (mounted) {
-      setState(() {});
-    }
+    if (mounted) setState(() {});
   }
 
   Future<void> _onContinuePressed() async {
@@ -81,108 +80,105 @@ class _AddUserScreenState extends State<AddUserScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final topPadding = MediaQuery.of(context).padding.top;
+    final bottomPadding = MediaQuery.of(context).padding.bottom;
+
     return Scaffold(
-      backgroundColor: Colors.transparent,
-      body: Container(
-        width: double.infinity,
-        color: const Color(0xFF111113),
-        child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+      body: Padding(
+        padding: EdgeInsets.fromLTRB(28, topPadding + 20, 28, bottomPadding + 20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                GestureDetector(
-                  onTap: _onCancelPressed,
-                  behavior: HitTestBehavior.opaque,
-                  child: AppIcons.addUserBackIcon,
-                ),
-                const SizedBox(height: 20),
                 Text(
-                  'Create \nyour profile',
+                  'Create \nYour Profile',
                   style: AppTypography.addUserHeadline,
+                  textAlign: TextAlign.left,
                 ),
-                Expanded(
-                  child: Center(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        _buildInputField(
-                          label: 'Name',
-                          hint: 'Enter your name',
-                          controller: _usernameController,
-                          focusNode: _usernameFocusNode,
-                          keyboardType: TextInputType.name,
-                        ),
-                        const SizedBox(height: 16),
-                        _buildInputField(
-                          label: 'Email address',
-                          hint: 'your@email.com',
-                          controller: _emailController,
-                          focusNode: _emailFocusNode,
-                          keyboardType: TextInputType.emailAddress,
-                        ),
-                        const SizedBox(height: 16),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: _buildInputField(
-                                label: 'Height (cm)',
-                                hint: 'e.g. 175',
-                                controller: _heightController,
-                                focusNode: _heightFocusNode,
-                                keyboardType: TextInputType.number,
-                              ),
-                            ),
-                            const SizedBox(width: 12),
-                            Expanded(
-                              child: _buildInputField(
-                                label: 'Weight (kg)',
-                                hint: 'e.g. 70',
-                                controller: _weightController,
-                                focusNode: _weightFocusNode,
-                                keyboardType: TextInputType.number,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                _ActionButton(
-                  label: 'Save User',
-                  onPressed: _onContinuePressed,
-                  gradient: const LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Color(0xFFF78A2A),
-                      Color(0xFFED7225),
-                    ],
-                  ),
-                  textStyle: AppTypography.addUserPrimaryButtonText,
-                  borderColor: Colors.white.withValues(alpha: 0.10),
-                ),
-                const SizedBox(height: 15),
-                _ActionButton(
-                  label: 'Cancel',
+                IconButton.filled(
                   onPressed: _onCancelPressed,
-                  gradient: const LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Color(0xFF2B2E33),
-                      Color(0xFF17191D),
-                    ],
+                  icon: AppIcons.addUserCloseIcon,
+                  style: IconButton.styleFrom(
+                    backgroundColor: AppTheme.white,
+                    foregroundColor: AppTheme.textPrimary,
+                    padding: const EdgeInsets.all(10),
+                    minimumSize: Size.zero,
+                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   ),
-                  textStyle: AppTypography.addUserSecondaryButtonText,
-                  borderColor: Colors.white.withValues(alpha: 0.10),
                 ),
               ],
             ),
-          ),
+            Expanded(
+              child: Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _buildInputField(
+                      label: 'Name',
+                      hint: 'Enter your name',
+                      controller: _usernameController,
+                      focusNode: _usernameFocusNode,
+                      keyboardType: TextInputType.name,
+                    ),
+                    const SizedBox(height: 20),
+                    _buildInputField(
+                      label: 'Email address',
+                      hint: 'your@email.com',
+                      controller: _emailController,
+                      focusNode: _emailFocusNode,
+                      keyboardType: TextInputType.emailAddress,
+                    ),
+                    const SizedBox(height: 20),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: _buildInputField(
+                            label: 'Height (cm)',
+                            hint: 'e.g. 175',
+                            controller: _heightController,
+                            focusNode: _heightFocusNode,
+                            keyboardType: TextInputType.number,
+                          ),
+                        ),
+                        const SizedBox(width: 15),
+                        Expanded(
+                          child: _buildInputField(
+                            label: 'Weight (kg)',
+                            hint: 'e.g. 70',
+                            controller: _weightController,
+                            focusNode: _weightFocusNode,
+                            keyboardType: TextInputType.number,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton.icon(
+                onPressed: _onContinuePressed,
+                icon: AppIcons.addUserSaveIcon,
+                iconAlignment: IconAlignment.end,
+                label: const Text('Save User'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppTheme.ctaDark,
+                  foregroundColor: AppTheme.white,
+                  padding: const EdgeInsets.symmetric(vertical: 20),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  elevation: 0,
+                  textStyle: AppTypography.getSaveButtonText,
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -200,38 +196,33 @@ class _AddUserScreenState extends State<AddUserScreen> {
       children: [
         Text(
           label,
-          style: AppTypography.addUserFieldLabel.copyWith(
-            color: focusNode.hasFocus ? const Color(0xFFED7225) : Colors.white,
-            fontWeight: focusNode.hasFocus ? FontWeight.w600 : FontWeight.w400,
-          ),
+          style: AppTypography.addUserFieldLabel,
         ),
-        const SizedBox(height: 10),
+        const SizedBox(height: 5),
         TextField(
           controller: controller,
           focusNode: focusNode,
           keyboardType: keyboardType,
           style: AppTypography.addUserTextFieldText,
+          cursorColor: AppTheme.textSecondary,
           decoration: InputDecoration(
             hintText: hint,
-            hintStyle: const TextStyle(color: Colors.white54),
+            hintStyle: TextStyle(color: AppTheme.muted.withValues(alpha: 0.75)),
             filled: true,
-            fillColor: const Color(0xFF202225),
+            fillColor: AppTheme.white,
+            hoverColor: AppTheme.white,
+            focusColor: AppTheme.white,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(15),
               borderSide: BorderSide.none,
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(15),
-              borderSide: BorderSide(
-                color: Colors.white.withValues(alpha: 0.05),
-              ),
+              borderSide: const BorderSide(color: AppTheme.white),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(15),
-              borderSide: const BorderSide(
-                color: Color(0xFFED7225),
-                width: 1.5,
-              ),
+              borderSide: const BorderSide(color: AppTheme.white),
             ),
             contentPadding: const EdgeInsets.symmetric(
               horizontal: 15,
@@ -240,50 +231,6 @@ class _AddUserScreenState extends State<AddUserScreen> {
           ),
         ),
       ],
-    );
-  }
-}
-
-class _ActionButton extends StatelessWidget {
-  const _ActionButton({
-    required this.label,
-    required this.onPressed,
-    required this.gradient,
-    required this.textStyle,
-    required this.borderColor,
-  });
-
-  final String label;
-  final VoidCallback onPressed;
-  final LinearGradient gradient;
-  final TextStyle textStyle;
-  final Color borderColor;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          gradient: gradient,
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: borderColor),
-        ),
-        child: ElevatedButton(
-          onPressed: onPressed,
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.transparent,
-            shadowColor: Colors.transparent,
-            foregroundColor: textStyle.color,
-            padding: const EdgeInsets.symmetric(vertical: 17.5),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
-            ),
-            elevation: 0,
-          ),
-          child: Text(label, style: textStyle),
-        ),
-      ),
     );
   }
 }
