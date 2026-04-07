@@ -1,4 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import '../../styles/app_theme.dart';
+import '../../styles/app_typography.dart';
 
 class AddNewCategoryScreen extends StatefulWidget {
   const AddNewCategoryScreen({super.key});
@@ -30,129 +34,118 @@ class _AddNewCategoryScreenState extends State<AddNewCategoryScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final topPadding = MediaQuery.of(context).padding.top;
+
     return Scaffold(
-      backgroundColor: const Color(0xFF060B14),
-      body: SafeArea(
+      body: Padding(
+        padding: EdgeInsets.fromLTRB(20, topPadding + 16, 20, 20),
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-              child: Row(
-                children: [
-                  IconButton(
-                    onPressed: () => Navigator.of(context).pop(),
-                    icon: const Icon(Icons.close_rounded, color: Colors.white),
+            // ── Header ──
+            Row(
+              children: [
+                GestureDetector(
+                  onTap: () => Navigator.of(context).pop(),
+                  child: const Icon(
+                    CupertinoIcons.xmark,
+                    color: AppTheme.white,
+                    size: 22,
                   ),
-                  Expanded(
-                    child: Text(
-                      'New Category',
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
+                ),
+                Expanded(
+                  child: Text(
+                    'New Category',
+                    textAlign: TextAlign.center,
+                    style: AppTypography.profileScreenTitle,
                   ),
-                  const SizedBox(width: 48),
-                ],
-              ),
+                ),
+                const SizedBox(width: 22),
+              ],
             ),
-            Container(height: 1, color: const Color(0xFF1B2433)),
+
+            const SizedBox(height: 8),
+            const Divider(color: AppTheme.divider, height: 1),
+            const SizedBox(height: 24),
+
+            // ── Form ──
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(28, 24, 28, 32),
+                padding: const EdgeInsets.symmetric(horizontal: 8),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _buildLabel('Category Name'),
+                    // Category Name
+                    Text('Category Name', style: AppTypography.addUserFieldLabel),
                     const SizedBox(height: 10),
                     TextField(
                       controller: _categoryNameController,
-                      style: const TextStyle(color: Colors.white),
+                      style: AppTypography.addUserTextFieldText,
+                      cursorColor: AppTheme.primary,
                       decoration: InputDecoration(
                         hintText: 'e.g., Study',
-                        hintStyle: const TextStyle(color: Colors.white38),
-                        filled: true,
-                        fillColor: const Color(0xFF161E2B),
-                        contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 18,
-                          vertical: 18,
+                        hintStyle: TextStyle(
+                          color: AppTheme.muted.withValues(alpha: 0.75),
                         ),
+                        filled: true,
+                        fillColor: AppTheme.surface,
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(18),
+                          borderRadius: BorderRadius.circular(15),
                           borderSide: BorderSide.none,
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
+                          borderSide: const BorderSide(color: AppTheme.divider),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
+                          borderSide: const BorderSide(color: AppTheme.primary),
+                        ),
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 15,
+                          vertical: 15,
                         ),
                       ),
                     ),
+
                     const SizedBox(height: 28),
-                    _buildLabel('Routine Category'),
+
+                    // Routine Category Toggle
+                    Text(
+                      'Routine Category',
+                      style: AppTypography.addUserFieldLabel,
+                    ),
                     const SizedBox(height: 10),
                     Container(
                       decoration: BoxDecoration(
-                        color: const Color(0xFF161E2B),
+                        color: AppTheme.surface,
                         borderRadius: BorderRadius.circular(16),
+                        border: Border.all(color: AppTheme.divider),
                       ),
                       child: Row(
                         children: [
-                          Expanded(
-                            child: GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  _isRoutineCategory = true;
-                                });
-                                debugPrint(
-                                  'AddNewCategoryScreen: routine category -> Yes',
-                                );
-                              },
-                              child: Container(
-                                margin: const EdgeInsets.all(4),
-                                padding: const EdgeInsets.symmetric(vertical: 14),
-                                decoration: BoxDecoration(
-                                  color: _isRoutineCategory
-                                      ? const Color(0xFF2F80ED)
-                                      : Colors.transparent,
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                alignment: Alignment.center,
-                                child: const Text(
-                                  'Yes',
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              ),
-                            ),
+                          _buildToggleOption(
+                            label: 'Yes',
+                            isSelected: _isRoutineCategory,
+                            onTap: () =>
+                                setState(() => _isRoutineCategory = true),
                           ),
-                          Expanded(
-                            child: GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  _isRoutineCategory = false;
-                                });
-                                debugPrint(
-                                  'AddNewCategoryScreen: routine category -> No',
-                                );
-                              },
-                              child: Container(
-                                margin: const EdgeInsets.all(4),
-                                padding: const EdgeInsets.symmetric(vertical: 14),
-                                decoration: BoxDecoration(
-                                  color: !_isRoutineCategory
-                                      ? const Color(0xFF2F80ED)
-                                      : Colors.transparent,
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                alignment: Alignment.center,
-                                child: const Text(
-                                  'No',
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              ),
-                            ),
+                          _buildToggleOption(
+                            label: 'No',
+                            isSelected: !_isRoutineCategory,
+                            onTap: () =>
+                                setState(() => _isRoutineCategory = false),
                           ),
                         ],
                       ),
                     ),
+
                     const SizedBox(height: 28),
-                    _buildLabel('Category Color'),
+
+                    // Category Color
+                    Text(
+                      'Category Color',
+                      style: AppTypography.addUserFieldLabel,
+                    ),
                     const SizedBox(height: 14),
                     Wrap(
                       spacing: 14,
@@ -161,14 +154,8 @@ class _AddNewCategoryScreenState extends State<AddNewCategoryScreen> {
                         final isSelected = index == _selectedColorIndex;
                         final color = _colorOptions[index];
                         return GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              _selectedColorIndex = index;
-                            });
-                            debugPrint(
-                              'AddNewCategoryScreen: selected color -> ${_colorToHex(color)}',
-                            );
-                          },
+                          onTap: () =>
+                              setState(() => _selectedColorIndex = index),
                           child: Container(
                             width: 42,
                             height: 42,
@@ -177,7 +164,7 @@ class _AddNewCategoryScreenState extends State<AddNewCategoryScreen> {
                               color: color,
                               border: Border.all(
                                 color: isSelected
-                                    ? Colors.white
+                                    ? AppTheme.white
                                     : Colors.transparent,
                                 width: 3,
                               ),
@@ -199,25 +186,23 @@ class _AddNewCategoryScreenState extends State<AddNewCategoryScreen> {
                 ),
               ),
             ),
-            SafeArea(
-              top: false,
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(28, 12, 28, 24),
-                child: SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: _onSaveCategoryPressed,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF2F80ED),
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 18),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(18),
-                      ),
-                    ),
-                    child: const Text('Save Category'),
+
+            // ── Save Button (pinned at bottom) ──
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: _onSaveCategoryPressed,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppTheme.primary,
+                  foregroundColor: AppTheme.white,
+                  padding: const EdgeInsets.symmetric(vertical: 18),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(40),
                   ),
+                  elevation: 0,
+                  textStyle: AppTypography.addUserSaveButtonText,
                 ),
+                child: const Text('Save Category'),
               ),
             ),
           ],
@@ -226,35 +211,48 @@ class _AddNewCategoryScreenState extends State<AddNewCategoryScreen> {
     );
   }
 
-  Widget _buildLabel(String text) {
-    return Text(
-      text,
-      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-        color: Colors.white70,
-        fontWeight: FontWeight.w500,
+  Widget _buildToggleOption({
+    required String label,
+    required bool isSelected,
+    required VoidCallback onTap,
+  }) {
+    return Expanded(
+      child: GestureDetector(
+        onTap: onTap,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 180),
+          margin: const EdgeInsets.all(4),
+          padding: const EdgeInsets.symmetric(vertical: 14),
+          decoration: BoxDecoration(
+            color: isSelected ? AppTheme.primary : Colors.transparent,
+            borderRadius: BorderRadius.circular(12),
+          ),
+          alignment: Alignment.center,
+          child: Text(
+            label,
+            style: AppTypography.taskFilterChip.copyWith(
+              fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
+            ),
+          ),
+        ),
       ),
     );
   }
 
   Future<void> _onSaveCategoryPressed() async {
-    debugPrint('AddNewCategoryScreen: save category button clicked');
     final isSaved = await _saveCategoryToDatabase();
     if (!mounted) return;
-    if (isSaved) {
-      debugPrint(
-        'AddNewCategoryScreen: category saved successfully, returning to previous screen',
-      );
-      Navigator.of(context).pop();
-    }
+    if (isSaved) Navigator.of(context).pop();
   }
 
+  /// Placeholder — replace with actual DB save logic.
   Future<bool> _saveCategoryToDatabase() async {
     final selectedColor = _colorOptions[_selectedColorIndex];
-    debugPrint('AddNewCategoryScreen: saving category with values');
-    debugPrint('categoryName: ${_categoryNameController.text}');
-    debugPrint('isRoutineCategory: $_isRoutineCategory');
-    debugPrint('categoryColor: ${_colorToHex(selectedColor)}');
     // TODO: Implement category save logic.
+    debugPrint('AddNewCategoryScreen: saving category');
+    debugPrint('  name: ${_categoryNameController.text}');
+    debugPrint('  isRoutine: $_isRoutineCategory');
+    debugPrint('  color: ${_colorToHex(selectedColor)}');
     return true;
   }
 

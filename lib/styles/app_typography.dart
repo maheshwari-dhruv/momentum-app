@@ -148,6 +148,101 @@ class AppTypography {
     color: AppTheme.textSecondary,
   );
 
+  // Profile Screen
+  static TextStyle get profileScreenTitle => const TextStyle(
+    fontFamily: googleSansFamily,
+    fontSize: 18,
+    fontWeight: FontWeight.w700,
+    color: AppTheme.white,
+  );
+  static TextStyle get profileUsername => const TextStyle(
+    fontFamily: googleSansFamily,
+    fontSize: 20,
+    fontWeight: FontWeight.w700,
+    color: AppTheme.white,
+  );
+  static TextStyle get profileSectionLabel => const TextStyle(
+    fontFamily: googleSansFamily,
+    fontSize: 16,
+    fontWeight: FontWeight.w600,
+    color: AppTheme.muted,
+  );
+  static TextStyle get profileTileTitle => const TextStyle(
+    fontFamily: googleSansFamily,
+    fontSize: 15,
+    fontWeight: FontWeight.w600,
+    color: AppTheme.white,
+  );
+  static TextStyle get profileTileSubtitle => const TextStyle(
+    fontFamily: googleSansFamily,
+    fontSize: 12,
+    fontWeight: FontWeight.w400,
+    color: AppTheme.textSecondary,
+  );
+  static TextStyle get profileVersionLabel => const TextStyle(
+    fontFamily: googleSansFamily,
+    fontSize: 11,
+    fontWeight: FontWeight.w500,
+    letterSpacing: 1.0,
+    color: AppTheme.muted,
+  );
+
+  // Task Screen
+  static TextStyle get taskSectionHeader => const TextStyle(
+    fontFamily: googleSansFamily,
+    fontSize: 13,
+    fontWeight: FontWeight.w700,
+    letterSpacing: 1.0,
+    color: AppTheme.textSecondary,
+  );
+  static TextStyle get taskCardTitle => const TextStyle(
+    fontFamily: googleSansFamily,
+    fontSize: 15,
+    fontWeight: FontWeight.w600,
+    color: AppTheme.white,
+  );
+  static TextStyle get taskPriorityLabel => const TextStyle(
+    fontFamily: googleSansFamily,
+    fontSize: 12,
+    fontWeight: FontWeight.w700,
+  );
+  static TextStyle get taskCategoryPill => const TextStyle(
+    fontFamily: googleSansFamily,
+    fontSize: 11,
+    fontWeight: FontWeight.w600,
+    color: AppTheme.primary,
+  );
+  static TextStyle get taskTimeLabel => const TextStyle(
+    fontFamily: googleSansFamily,
+    fontSize: 12,
+    fontWeight: FontWeight.w400,
+    color: AppTheme.muted,
+  );
+  static TextStyle get taskFilterChip => const TextStyle(
+    fontFamily: googleSansFamily,
+    fontSize: 13,
+    fontWeight: FontWeight.w500,
+    color: AppTheme.white,
+  );
+  static TextStyle get taskProgressCount => const TextStyle(
+    fontFamily: googleSansFamily,
+    fontSize: 13,
+    fontWeight: FontWeight.w600,
+    color: AppTheme.textSecondary,
+  );
+  static TextStyle get taskProgressTitle => const TextStyle(
+    fontFamily: googleSansFamily,
+    fontSize: 17,
+    fontWeight: FontWeight.w700,
+    color: AppTheme.white,
+  );
+  static TextStyle get taskProgressPercent => const TextStyle(
+    fontFamily: googleSansFamily,
+    fontSize: 13,
+    fontWeight: FontWeight.w700,
+    color: AppTheme.white,
+  );
+
   static TextTheme get textTheme => _buildTextTheme(
     fontFamily: googleSansFamily,
     bodyColor: AppTheme.white,

@@ -1,5 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../styles/app_theme.dart';
+import '../../styles/app_typography.dart';
 import 'add_new_category_screen.dart';
 
 class AddTaskScreen extends StatefulWidget {
@@ -7,20 +10,14 @@ class AddTaskScreen extends StatefulWidget {
     super.key,
     this.editTaskId,
     this.initialName,
-    this.initialDescription,
     this.initialPriority,
     this.initialCategory,
-    this.initialDate,
-    this.initialTime,
   });
 
   final String? editTaskId;
   final String? initialName;
-  final String? initialDescription;
   final String? initialPriority;
   final String? initialCategory;
-  final DateTime? initialDate;
-  final TimeOfDay? initialTime;
 
   bool get isEditing => editTaskId != null;
 
@@ -30,9 +27,13 @@ class AddTaskScreen extends StatefulWidget {
 
 class _AddTaskScreenState extends State<AddTaskScreen> {
   final TextEditingController _taskNameController = TextEditingController();
-  final TextEditingController _taskDescriptionController = TextEditingController();
 
-  final List<String> _priorities = const ['Low', 'Medium', 'High'];
+  static const List<_PriorityOption> _priorities = [
+    _PriorityOption(label: 'Low', color: AppTheme.success),
+    _PriorityOption(label: 'Medium', color: AppTheme.warning),
+    _PriorityOption(label: 'High', color: AppTheme.danger),
+  ];
+
   final List<String> _categories = <String>[
     'Personal',
     'Work',
@@ -43,18 +44,15 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
 
   int _selectedPriorityIndex = 1;
   int _selectedCategoryIndex = 0;
-  DateTime _selectedDate = DateTime.now();
-  TimeOfDay _selectedTime = const TimeOfDay(hour: 10, minute: 0);
 
   @override
   void initState() {
     super.initState();
     if (widget.isEditing) {
       _taskNameController.text = widget.initialName ?? '';
-      _taskDescriptionController.text = widget.initialDescription ?? '';
       if (widget.initialPriority != null) {
         final idx = _priorities.indexWhere(
-          (p) => p.toLowerCase() == widget.initialPriority!.toLowerCase(),
+          (p) => p.label.toLowerCase() == widget.initialPriority!.toLowerCase(),
         );
         if (idx != -1) _selectedPriorityIndex = idx;
       }
@@ -64,107 +62,143 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
         );
         if (idx != -1) _selectedCategoryIndex = idx;
       }
-      _selectedDate = widget.initialDate ?? DateTime.now();
-      _selectedTime = widget.initialTime ?? const TimeOfDay(hour: 10, minute: 0);
     }
   }
 
   @override
   void dispose() {
     _taskNameController.dispose();
-    _taskDescriptionController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final topPadding = MediaQuery.of(context).padding.top;
+
     return Scaffold(
-      backgroundColor: const Color(0xFF060B14),
-      body: SafeArea(
+      body: Padding(
+        padding: EdgeInsets.fromLTRB(20, topPadding + 16, 20, 20),
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-              child: Row(
-                children: [
-                  IconButton(
-                    onPressed: () => Navigator.of(context).pop(),
-                    icon: const Icon(Icons.close_rounded, color: Colors.white),
+            // ── Header ──
+            Row(
+              children: [
+                GestureDetector(
+                  onTap: () => Navigator.of(context).pop(),
+                  child: const Icon(
+                    CupertinoIcons.xmark,
+                    color: AppTheme.white,
+                    size: 22,
                   ),
-                  Expanded(
-                    child: Text(
-                      widget.isEditing ? 'Edit Task' : 'Add New Task',
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
+                ),
+                Expanded(
+                  child: Text(
+                    widget.isEditing ? 'Edit Task' : 'Add New Task',
+                    textAlign: TextAlign.center,
+                    style: AppTypography.profileScreenTitle,
                   ),
-                  const SizedBox(width: 48),
-                ],
-              ),
+                ),
+                const SizedBox(width: 22),
+              ],
             ),
-            Container(height: 1, color: const Color(0xFF1B2433)),
+
+            const SizedBox(height: 8),
+            const Divider(color: AppTheme.divider, height: 1),
+
+            const SizedBox(height: 24),
+
+            // ── Form ──
             Expanded(
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.fromLTRB(28, 24, 28, 32),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _buildLabel('Task Name'),
+                    // Task Name
+                    Text('Task Name', style: AppTypography.addUserFieldLabel),
                     const SizedBox(height: 10),
-                    _buildTextField(
+                    TextField(
                       controller: _taskNameController,
-                      hintText: 'e.g., Morning Run',
+                      style: AppTypography.addUserTextFieldText,
+                      cursorColor: AppTheme.primary,
+                      decoration: InputDecoration(
+                        hintText: 'e.g., Morning Run',
+                        hintStyle: TextStyle(
+                          color: AppTheme.muted.withValues(alpha: 0.75),
+                        ),
+                        filled: true,
+                        fillColor: AppTheme.surface,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
+                          borderSide: BorderSide.none,
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
+                          borderSide: const BorderSide(color: AppTheme.divider),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
+                          borderSide: const BorderSide(color: AppTheme.primary),
+                        ),
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 15,
+                          vertical: 15,
+                        ),
+                      ),
                     ),
-                    const SizedBox(height: 24),
-                    _buildLabel('Description'),
-                    const SizedBox(height: 10),
-                    _buildTextField(
-                      controller: _taskDescriptionController,
-                      hintText: 'Add details regarding this task...',
-                      maxLines: 5,
-                    ),
-                    const SizedBox(height: 24),
-                    _buildLabel('Priority'),
+
+                    const SizedBox(height: 28),
+
+                    // Priority
+                    Text('Priority', style: AppTypography.addUserFieldLabel),
                     const SizedBox(height: 10),
                     Container(
                       decoration: BoxDecoration(
-                        color: const Color(0xFF161E2B),
+                        color: AppTheme.surface,
                         borderRadius: BorderRadius.circular(16),
+                        border: Border.all(color: AppTheme.divider),
                       ),
                       child: Row(
                         children: List.generate(_priorities.length, (index) {
                           final isSelected = index == _selectedPriorityIndex;
+                          final priority = _priorities[index];
                           return Expanded(
                             child: GestureDetector(
                               onTap: () {
-                                setState(() {
-                                  _selectedPriorityIndex = index;
-                                });
-                                debugPrint(
-                                  'AddTaskScreen: selected priority -> ${_priorities[index]}',
-                                );
+                                setState(() => _selectedPriorityIndex = index);
                               },
-                              child: Container(
+                              child: AnimatedContainer(
+                                duration: const Duration(milliseconds: 180),
                                 margin: const EdgeInsets.all(4),
                                 padding: const EdgeInsets.symmetric(vertical: 14),
                                 decoration: BoxDecoration(
                                   color: isSelected
-                                      ? const Color(0xFF2F80ED)
+                                      ? AppTheme.primary
                                       : Colors.transparent,
                                   borderRadius: BorderRadius.circular(12),
                                 ),
                                 alignment: Alignment.center,
-                                child: Text(
-                                  _priorities[index],
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: isSelected
-                                        ? FontWeight.w700
-                                        : FontWeight.w500,
-                                  ),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Container(
+                                      width: 8,
+                                      height: 8,
+                                      decoration: BoxDecoration(
+                                        color: priority.color,
+                                        shape: BoxShape.circle,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 6),
+                                    Text(
+                                      priority.label,
+                                      style: AppTypography.taskFilterChip.copyWith(
+                                        fontWeight: isSelected
+                                            ? FontWeight.w700
+                                            : FontWeight.w500,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
@@ -172,42 +206,11 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                         }),
                       ),
                     ),
-                    const SizedBox(height: 24),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              _buildLabel('Date'),
-                              const SizedBox(height: 10),
-                              _SelectionField(
-                                label: _formatDate(_selectedDate),
-                                icon: Icons.calendar_today_outlined,
-                                onTap: _pickDate,
-                              ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(width: 16),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              _buildLabel('Time'),
-                              const SizedBox(height: 10),
-                              _SelectionField(
-                                label: _selectedTime.format(context),
-                                icon: Icons.access_time_rounded,
-                                onTap: _pickTime,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 24),
-                    _buildLabel('Category'),
+
+                    const SizedBox(height: 28),
+
+                    // Category
+                    Text('Category', style: AppTypography.addUserFieldLabel),
                     const SizedBox(height: 10),
                     Wrap(
                       spacing: 10,
@@ -217,36 +220,31 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                           final isSelected = index == _selectedCategoryIndex;
                           return GestureDetector(
                             onTap: () {
-                              setState(() {
-                                _selectedCategoryIndex = index;
-                              });
-                              debugPrint(
-                                'AddTaskScreen: selected category -> ${_categories[index]}',
-                              );
+                              setState(() => _selectedCategoryIndex = index);
                             },
-                            child: Container(
+                            child: AnimatedContainer(
+                              duration: const Duration(milliseconds: 180),
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 18,
                                 vertical: 12,
                               ),
                               decoration: BoxDecoration(
                                 color: isSelected
-                                    ? const Color(0xFF122A57)
+                                    ? AppTheme.primary.withValues(alpha: 0.15)
                                     : Colors.transparent,
                                 borderRadius: BorderRadius.circular(999),
                                 border: Border.all(
                                   color: isSelected
-                                      ? const Color(0xFF2F80ED)
-                                      : const Color(0xFF2B3445),
+                                      ? AppTheme.primary
+                                      : AppTheme.divider,
                                 ),
                               ),
                               child: Text(
                                 _categories[index],
-                                style: TextStyle(
+                                style: AppTypography.taskFilterChip.copyWith(
                                   color: isSelected
-                                      ? const Color(0xFF5EA2FF)
-                                      : Colors.white70,
-                                  fontWeight: FontWeight.w500,
+                                      ? AppTheme.primary
+                                      : AppTheme.textSecondary,
                                 ),
                               ),
                             ),
@@ -255,43 +253,49 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                         GestureDetector(
                           onTap: _onAddNewCategoryPressed,
                           child: Container(
-                            width: 48,
-                            height: 48,
+                            width: 46,
+                            height: 46,
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              border: Border.all(
-                                color: const Color(0xFF2B3445),
-                                style: BorderStyle.solid,
-                              ),
+                              border: Border.all(color: AppTheme.divider),
                             ),
                             child: const Icon(
-                              Icons.add_rounded,
-                              color: Colors.white70,
+                              CupertinoIcons.add,
+                              color: AppTheme.textSecondary,
+                              size: 20,
                             ),
                           ),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 36),
-                    SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton.icon(
-                        onPressed: _onCreateTaskPressed,
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFF2F80ED),
-                          foregroundColor: Colors.white,
-                          padding: const EdgeInsets.symmetric(vertical: 18),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18),
-                          ),
-                        ),
-                        icon: Icon(widget.isEditing
-                            ? Icons.save_rounded
-                            : Icons.add_task_rounded),
-                        label: Text(widget.isEditing ? 'Save Changes' : 'Create Task'),
-                      ),
-                    ),
                   ],
+                ),
+              ),
+            ),
+
+            // ── Save Button (pinned at bottom) ──
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton.icon(
+                onPressed: _onSavePressed,
+                icon: Icon(
+                  widget.isEditing
+                      ? CupertinoIcons.checkmark_alt
+                      : CupertinoIcons.add,
+                ),
+                iconAlignment: IconAlignment.end,
+                label: Text(
+                  widget.isEditing ? 'Save Changes' : 'Create Task',
+                ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppTheme.primary,
+                  foregroundColor: AppTheme.white,
+                  padding: const EdgeInsets.symmetric(vertical: 18),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(40),
+                  ),
+                  elevation: 0,
+                  textStyle: AppTypography.addUserSaveButtonText,
                 ),
               ),
             ),
@@ -301,71 +305,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
     );
   }
 
-  Widget _buildLabel(String text) {
-    return Text(
-      text,
-      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-        color: Colors.white70,
-        fontWeight: FontWeight.w500,
-      ),
-    );
-  }
-
-  Widget _buildTextField({
-    required TextEditingController controller,
-    required String hintText,
-    int maxLines = 1,
-  }) {
-    return TextField(
-      controller: controller,
-      maxLines: maxLines,
-      style: const TextStyle(color: Colors.white),
-      decoration: InputDecoration(
-        hintText: hintText,
-        hintStyle: const TextStyle(color: Colors.white38),
-        filled: true,
-        fillColor: const Color(0xFF161E2B),
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: 18,
-          vertical: 18,
-        ),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(18),
-          borderSide: BorderSide.none,
-        ),
-      ),
-    );
-  }
-
-  Future<void> _pickDate() async {
-    final picked = await showDatePicker(
-      context: context,
-      initialDate: _selectedDate,
-      firstDate: DateTime.now().subtract(const Duration(days: 365)),
-      lastDate: DateTime.now().add(const Duration(days: 365 * 5)),
-    );
-    if (picked == null) return;
-    setState(() {
-      _selectedDate = picked;
-    });
-    debugPrint('AddTaskScreen: selected date -> ${_formatDate(_selectedDate)}');
-  }
-
-  Future<void> _pickTime() async {
-    final picked = await showTimePicker(
-      context: context,
-      initialTime: _selectedTime,
-    );
-    if (picked == null) return;
-    setState(() {
-      _selectedTime = picked;
-    });
-    if (!mounted) return;
-    debugPrint('AddTaskScreen: selected time -> ${_selectedTime.format(context)}');
-  }
-
-  Future<void> _onCreateTaskPressed() async {
-    debugPrint('AddTaskScreen: ${widget.isEditing ? "update" : "create"} task button clicked');
+  Future<void> _onSavePressed() async {
     final isSaved = widget.isEditing
         ? await _updateTaskInDatabase()
         : await _saveTaskToDatabase();
@@ -375,81 +315,39 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
     }
   }
 
+  /// Placeholder — replace with actual DB save logic.
   Future<bool> _saveTaskToDatabase() async {
     // TODO: Implement task save logic.
     debugPrint('AddTaskScreen: saving new task');
-    debugPrint('taskName: ${_taskNameController.text}');
-    debugPrint('description: ${_taskDescriptionController.text}');
-    debugPrint('priority: ${_priorities[_selectedPriorityIndex]}');
-    debugPrint('date: ${_formatDate(_selectedDate)}');
-    if (mounted) {
-      debugPrint('time: ${_selectedTime.format(context)}');
-    }
-    debugPrint('category: ${_categories[_selectedCategoryIndex]}');
+    debugPrint('  name: ${_taskNameController.text}');
+    debugPrint('  priority: ${_priorities[_selectedPriorityIndex].label}');
+    debugPrint('  category: ${_categories[_selectedCategoryIndex]}');
     return true;
   }
 
+  /// Placeholder — replace with actual DB update logic.
   Future<bool> _updateTaskInDatabase() async {
     // TODO: Implement task update logic.
     debugPrint('AddTaskScreen: updating task ${widget.editTaskId}');
-    debugPrint('taskName: ${_taskNameController.text}');
-    debugPrint('priority: ${_priorities[_selectedPriorityIndex]}');
-    debugPrint('category: ${_categories[_selectedCategoryIndex]}');
+    debugPrint('  name: ${_taskNameController.text}');
+    debugPrint('  priority: ${_priorities[_selectedPriorityIndex].label}');
+    debugPrint('  category: ${_categories[_selectedCategoryIndex]}');
     return true;
   }
 
   void _onAddNewCategoryPressed() {
-    debugPrint('AddTaskScreen: add new category button clicked');
     Navigator.of(context).push(
       MaterialPageRoute<void>(
         builder: (_) => const AddNewCategoryScreen(),
       ),
     );
   }
-
-  String _formatDate(DateTime date) {
-    final now = DateTime.now();
-    final isToday =
-        date.year == now.year && date.month == now.month && date.day == now.day;
-    if (isToday) return 'Today';
-    return '${date.day}/${date.month}/${date.year}';
-  }
 }
 
-class _SelectionField extends StatelessWidget {
-  const _SelectionField({
-    required this.label,
-    required this.icon,
-    required this.onTap,
-  });
+/// Priority option with an associated color for backend use.
+class _PriorityOption {
+  const _PriorityOption({required this.label, required this.color});
 
   final String label;
-  final IconData icon;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(16),
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-        decoration: BoxDecoration(
-          color: const Color(0xFF161E2B),
-          borderRadius: BorderRadius.circular(16),
-        ),
-        child: Row(
-          children: [
-            Expanded(
-              child: Text(
-                label,
-                style: const TextStyle(color: Colors.white),
-              ),
-            ),
-            Icon(icon, color: Colors.white54, size: 20),
-          ],
-        ),
-      ),
-    );
-  }
+  final Color color;
 }

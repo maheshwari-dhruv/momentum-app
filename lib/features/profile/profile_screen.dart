@@ -1,120 +1,135 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../app/navigation/app_tab_navigation.dart';
-import '../../shared/widgets/app_tab_scaffold.dart';
+import '../../styles/app_theme.dart';
+import '../../styles/app_typography.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
 
   @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  static const Color _avatarBg = Color(0xFFFFD178);
+
+  String _username = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUsername();
+  }
+
+  /// Placeholder — replace with actual DB query.
+  Future<void> _loadUsername() async {
+    // TODO: Fetch from database.
+    final name = await _fetchUsernameFromDatabase();
+    if (!mounted) return;
+    setState(() => _username = name);
+  }
+
+  /// Placeholder — returns dummy username until DB is wired up.
+  Future<String> _fetchUsernameFromDatabase() async {
+    return 'Alex Doe';
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return AppTabScaffold(
-      currentTab: AppTab.account,
-      onTabSelected: (selected) {
-        navigateFromTabSelection(
-          context,
-          currentTab: AppTab.account,
-          selectedTab: selected,
-        );
-      },
-      backgroundColor: const Color(0xFF020B1F),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(24, 18, 24, 28),
-          child: Column(
-            children: [
-              Text(
-                'Account',
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-              const SizedBox(height: 26),
-              Container(
-                width: 96,
-                height: 96,
-                decoration: const BoxDecoration(
-                  color: Color(0xFFE9C8A3),
-                  shape: BoxShape.circle,
-                ),
-                child: const Icon(
-                  Icons.person_rounded,
-                  size: 52,
-                  color: Color(0xFF5E4638),
-                ),
-              ),
-              const SizedBox(height: 16),
-              Text(
-                'Alex Doe',
-                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-              const SizedBox(height: 34),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  'DATA & ACCOUNT',
-                  style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                    color: Colors.white54,
-                    fontWeight: FontWeight.w700,
-                    letterSpacing: 1.2,
+    final topPadding = MediaQuery.of(context).padding.top;
+
+    return Scaffold(
+      body: Padding(
+        padding: EdgeInsets.fromLTRB(20, topPadding + 20, 20, 20),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                GestureDetector(
+                  onTap: () => Navigator.of(context).pop(),
+                  child: const Icon(
+                    CupertinoIcons.back,
+                    color: AppTheme.white,
+                    size: 24,
                   ),
                 ),
-              ),
-              const SizedBox(height: 14),
-              Container(
-                decoration: BoxDecoration(
-                  color: const Color(0xFF111D36),
-                  borderRadius: BorderRadius.circular(20),
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Color(0x22000000),
-                      blurRadius: 14,
-                      offset: Offset(0, 8),
-                    ),
-                  ],
+                Expanded(
+                  child: Text(
+                    'Account',
+                    textAlign: TextAlign.center,
+                    style: AppTypography.profileScreenTitle,
+                  ),
                 ),
-                child: Column(
-                  children: const [
-                    _AccountOptionTile(
-                      icon: Icons.description_outlined,
-                      title: 'Progress Report',
-                      subtitle: 'Download PDF',
-                      trailingIcon: Icons.download_rounded,
-                    ),
-                    Divider(height: 1, color: Color(0xFF1B2A47)),
-                    _AccountOptionTile(
-                      icon: Icons.manage_accounts_outlined,
-                      title: 'Account Details',
-                      subtitle: 'View and update profile',
-                      trailingIcon: Icons.chevron_right_rounded,
-                    ),
-                  ],
+                const SizedBox(width: 24),
+              ],
+            ),
+            const SizedBox(height: 28),
+            Container(
+              width: 96,
+              height: 96,
+              decoration: BoxDecoration(
+                color: _avatarBg,
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: AppTheme.white.withValues(alpha: 0.16),
+                  width: 1.6,
                 ),
               ),
-              const Spacer(),
-              Text(
-                'Log Out',
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  color: const Color(0xFFFF5B5B),
-                  fontWeight: FontWeight.w600,
-                ),
+              alignment: Alignment.center,
+              child: const Text('🐯', style: TextStyle(fontSize: 48)),
+            ),
+            const SizedBox(height: 14),
+            Text(
+              _username.isEmpty ? '...' : _username,
+              style: AppTypography.profileUsername,
+            ),
+            const SizedBox(height: 32),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                'Data & Account',
+                style: AppTypography.profileSectionLabel,
               ),
-              const SizedBox(height: 26),
-              Text(
-                'MOMENTUM V2.4.1 (BUILD 204)',
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                  color: Colors.white30,
-                  letterSpacing: 1.0,
-                ),
+            ),
+            const SizedBox(height: 12),
+            Container(
+              decoration: BoxDecoration(
+                color: AppTheme.card,
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.2),
+                    blurRadius: 20,
+                    offset: const Offset(0, 6),
+                  ),
+                ],
               ),
-            ],
-          ),
+              child: const Column(
+                children: [
+                  _AccountOptionTile(
+                    icon: CupertinoIcons.doc_text,
+                    title: 'Progress Report',
+                    subtitle: 'Download PDF',
+                    trailingIcon: CupertinoIcons.arrow_down_to_line,
+                  ),
+                  Divider(height: 1, color: AppTheme.divider),
+                  _AccountOptionTile(
+                    icon: CupertinoIcons.person_2,
+                    title: 'Account Details',
+                    subtitle: 'View and update profile',
+                    trailingIcon: CupertinoIcons.chevron_right,
+                  ),
+                ],
+              ),
+            ),
+            const Spacer(),
+            Text(
+              'MOMENTUM V0.0.1 (BUILD 001)',
+              textAlign: TextAlign.center,
+              style: AppTypography.profileVersionLabel,
+            ),
+          ],
         ),
       ),
     );
@@ -137,42 +152,30 @@ class _AccountOptionTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
       child: Row(
         children: [
           Container(
-            width: 44,
-            height: 44,
+            padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-              color: const Color(0xFF17284A),
+              color: AppTheme.primary.withValues(alpha: 0.12),
               borderRadius: BorderRadius.circular(12),
             ),
-            child: Icon(icon, color: const Color(0xFF5EA2FF)),
+            child: Icon(icon, color: AppTheme.primary, size: 22),
           ),
           const SizedBox(width: 14),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  title,
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                const SizedBox(height: 3),
-                Text(
-                  subtitle,
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: Colors.white54,
-                  ),
-                ),
+                Text(title, style: AppTypography.profileTileTitle),
+                const SizedBox(height: 2),
+                Text(subtitle, style: AppTypography.profileTileSubtitle),
               ],
             ),
           ),
           const SizedBox(width: 12),
-          Icon(trailingIcon, color: Colors.white38),
+          Icon(trailingIcon, color: AppTheme.muted, size: 20),
         ],
       ),
     );
