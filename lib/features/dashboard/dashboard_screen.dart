@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 
 import '../../app/navigation/app_tab_navigation.dart';
 import '../../shared/widgets/app_tab_scaffold.dart';
+import '../../styles/app_icons.dart';
 import '../../styles/app_theme.dart';
 import '../../styles/app_typography.dart';
 import '../profile/profile_screen.dart';
@@ -165,20 +166,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       builder: (_) => const ProfileScreen(),
                     ),
                   ),
-                  child: Container(
-                    width: 48,
-                    height: 48,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: const Color(0xFFFFD178),
-                      border: Border.all(
-                        color: Colors.white.withValues(alpha: 0.25),
-                        width: 1.2,
-                      ),
-                    ),
-                    alignment: Alignment.center,
-                    child: const Text('🐯', style: TextStyle(fontSize: 24)),
-                  ),
+                  child: _buildProfileAvatar(),
                 ),
               ],
             ),
@@ -194,7 +182,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     children: [
                       Text(
                         'Progress',
-                        style: AppTypography.dashboardCardHeadingText,
+                        style: AppTypography.dashboardCardHeading,
                       ),
                       const Spacer(),
                       _SeeAllPill(
@@ -223,7 +211,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     children: [
                       Text(
                         'Routines',
-                        style: AppTypography.dashboardCardHeadingText,
+                        style: AppTypography.dashboardCardHeading,
                       ),
                       const Spacer(),
                       _SeeAllPill(onTap: () => _goToRoutine(context)),
@@ -231,18 +219,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   ),
                   const SizedBox(height: 24),
                   if (_routineGroups.isEmpty)
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 20),
-                      child: Center(
-                        child: Text(
-                          'No routines for today.',
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyMedium
-                              ?.copyWith(color: AppTheme.muted),
-                        ),
-                      ),
-                    )
+                    _buildEmptyState('No routines for today.')
                   else
                     ..._routineGroups.map(
                       (group) => Padding(
@@ -265,7 +242,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     children: [
                       Text(
                         "Tasks",
-                        style: AppTypography.dashboardCardHeadingText,
+                        style: AppTypography.dashboardCardHeading,
                       ),
                       const Spacer(),
                       _SeeAllPill(onTap: () => _goToTaskScene(context)),
@@ -273,18 +250,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   ),
                   const SizedBox(height: 24),
                   if (_todayTasks.isEmpty)
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 20),
-                      child: Center(
-                        child: Text(
-                          'No tasks for today.',
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyMedium
-                              ?.copyWith(color: AppTheme.muted),
-                        ),
-                      ),
-                    )
+                    _buildEmptyState('No tasks for today.')
                   else
                     _buildTaskGrid(),
                 ],
@@ -297,9 +263,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
             _DashboardCard(
               child: Row(
                 children: [
-                  Icon(
-                    CupertinoIcons.quote_bubble,
-                    color: AppTheme.primary.withValues(alpha: 1),
+                  const Icon(
+                    AppIcons.quoteIcon,
+                    color: AppTheme.primary,
                     size: 30,
                   ),
                   const SizedBox(width: 15),
@@ -410,6 +376,34 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
+  static const Color _avatarBg = Color(0xFFFFD178);
+
+  Widget _buildProfileAvatar() {
+    return Container(
+      width: 48,
+      height: 48,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: _avatarBg,
+        border: Border.all(
+          color: AppTheme.white.withValues(alpha: 0.25),
+          width: 1.2,
+        ),
+      ),
+      alignment: Alignment.center,
+      child: const Text('🐯', style: TextStyle(fontSize: 24)),
+    );
+  }
+
+  Widget _buildEmptyState(String message) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 20),
+      child: Center(
+        child: Text(message, style: AppTypography.dashboardEmptyState),
+      ),
+    );
+  }
+
   static const int _maxInlineNameLength = 12;
 
   Widget _buildGreeting(String greeting, String name) {
@@ -451,7 +445,7 @@ class _SeeAllPill extends StatelessWidget {
         ),
         child: Text(
           label,
-          style: AppTypography.dashboardSeeAllPillText,
+          style: AppTypography.dashboardPillLabel,
         ),
       ),
     );
@@ -533,10 +527,7 @@ class _WeeklyAreaChart extends StatelessWidget {
               reservedSize: 32,
               getTitlesWidget: (value, _) => Text(
                 '${value.toInt()}%',
-                style: TextStyle(
-                  color: AppTheme.textSecondary,
-                  fontSize: 10,
-                ),
+                style: AppTypography.chartYAxisLabel,
               ),
             ),
           ),
@@ -553,10 +544,7 @@ class _WeeklyAreaChart extends StatelessWidget {
                   padding: const EdgeInsets.only(top: 8),
                   child: Text(
                     data[i].label,
-                    style: TextStyle(
-                      color: AppTheme.textSecondary,
-                      fontSize: 12,
-                    ),
+                    style: AppTypography.chartAxisLabel,
                   ),
                 );
               },
@@ -586,7 +574,7 @@ class _WeeklyAreaChart extends StatelessWidget {
             barWidth: 2.5,
             dotData: FlDotData(
               show: true,
-              getDotPainter: (spot, _, __, ___) => FlDotCirclePainter(
+              getDotPainter: (spot, _, _, _) => FlDotCirclePainter(
                 radius: 3,
                 color: AppTheme.primary,
                 strokeWidth: 0,
@@ -652,18 +640,12 @@ class _RoutineTile extends StatelessWidget {
               children: [
                 Text(
                   group.category,
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w600,
-                  ),
+                  style: AppTypography.dashboardTileTitle,
                 ),
                 const SizedBox(height: 2),
                 Text(
                   '${group.completedCount}/${group.totalCount} completed',
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodySmall
-                      ?.copyWith(color: AppTheme.textSecondary),
+                  style: AppTypography.dashboardTileSubtitle,
                 ),
                 const SizedBox(height: 8),
                 ClipRRect(
@@ -681,10 +663,10 @@ class _RoutineTile extends StatelessWidget {
           const SizedBox(width: 12),
           Text(
             '${(group.progress * 100).toInt()}%',
-            style: Theme.of(context)
-                .textTheme
-                .labelLarge
-                ?.copyWith(color: group.color),
+            style: AppTypography.dashboardTileTitle.copyWith(
+              color: group.color,
+              fontSize: 14,
+            ),
           ),
         ],
     );
@@ -731,10 +713,7 @@ class _TaskCard extends StatelessWidget {
                 Expanded(
                   child: Text(
                     task.category,
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodySmall
-                        ?.copyWith(color: AppTheme.textSecondary),
+                    style: AppTypography.dashboardTileSubtitle,
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
@@ -742,28 +721,22 @@ class _TaskCard extends StatelessWidget {
                   onTap: onToggle,
                   child: Icon(
                     task.isCompleted
-                        ? CupertinoIcons.checkmark_circle_fill
-                        : CupertinoIcons.circle,
-                    color: task.isCompleted
-                        ? AppTheme.primary
-                        : AppTheme.muted,
+                        ? AppIcons.checkCircleFilled
+                        : AppIcons.circleOutline,
+                    color: task.isCompleted ? AppTheme.primary : AppTheme.muted,
                     size: 22,
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 40),
+            const SizedBox(height: 12),
             Text(
               task.title,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                color: task.isCompleted
-                    ? AppTheme.muted
-                    : AppTheme.textPrimary,
-                fontWeight: FontWeight.w600,
-                decoration:
-                    task.isCompleted ? TextDecoration.lineThrough : null,
+              style: AppTypography.dashboardTileTitle.copyWith(
+                color: task.isCompleted ? AppTheme.muted : AppTheme.textPrimary,
+                decoration: task.isCompleted ? TextDecoration.lineThrough : null,
               ),
             ),
           ],
@@ -812,25 +785,18 @@ class _TaskContextMenu extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           ListTile(
-            leading: const Icon(CupertinoIcons.pencil, color: AppTheme.textPrimary),
-            title: Text(
-              'Edit',
-              style: Theme.of(context)
-                  .textTheme
-                  .titleMedium
-                  ?.copyWith(color: AppTheme.textPrimary),
-            ),
+            leading: const Icon(AppIcons.editIcon, color: AppTheme.textPrimary),
+            title: Text('Edit', style: AppTypography.dashboardTileTitle),
             onTap: onEdit,
           ),
           const Divider(height: 1, color: AppTheme.divider),
           ListTile(
-            leading: const Icon(CupertinoIcons.trash, color: Color(0xFFEF4444)),
+            leading: const Icon(AppIcons.deleteIcon, color: AppTheme.danger),
             title: Text(
               'Delete',
-              style: Theme.of(context)
-                  .textTheme
-                  .titleMedium
-                  ?.copyWith(color: const Color(0xFFEF4444)),
+              style: AppTypography.dashboardTileTitle.copyWith(
+                color: AppTheme.danger,
+              ),
             ),
             onTap: onDelete,
           ),
@@ -841,9 +807,9 @@ class _TaskContextMenu extends StatelessWidget {
 }
 
 enum TaskPriority {
-  high(Color(0xFFEF4444)),
-  medium(Color(0xFFEAB308)),
-  low(Color(0xFF22C55E));
+  high(AppTheme.danger),
+  medium(AppTheme.warning),
+  low(AppTheme.success);
 
   const TaskPriority(this.color);
   final Color color;

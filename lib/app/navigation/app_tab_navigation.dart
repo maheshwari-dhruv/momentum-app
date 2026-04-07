@@ -14,28 +14,15 @@ void navigateFromTabSelection(
 }) {
   if (selectedTab == currentTab) return;
 
-  Widget destination;
-  switch (selectedTab) {
-    case AppTab.home:
-      destination = const DashboardScreen();
-      break;
-    case AppTab.tasks:
-      destination = const TaskScreen();
-      break;
-    case AppTab.routines:
-      destination = const RoutineScreen();
-      break;
-    case AppTab.stats:
-      destination = const StatsScreen();
-      break;
-    case AppTab.account:
-      destination = const ProfileScreen();
-      break;
-  }
+  final destination = switch (selectedTab) {
+    AppTab.home => const DashboardScreen(),
+    AppTab.tasks => const TaskScreen(),
+    AppTab.routines => const RoutineScreen(),
+    AppTab.stats => const StatsScreen(),
+    AppTab.account => const ProfileScreen(),
+  };
 
-  Navigator.of(
-    context,
-  ).pushReplacement(
+  Navigator.of(context).pushReplacement(
     PageRouteBuilder<void>(
       pageBuilder: (context, animation, secondaryAnimation) => destination,
       transitionDuration: const Duration(milliseconds: 240),

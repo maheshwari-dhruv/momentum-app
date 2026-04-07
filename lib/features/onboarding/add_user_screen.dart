@@ -174,7 +174,7 @@ class _AddUserScreenState extends State<AddUserScreen> {
                     borderRadius: BorderRadius.circular(40),
                   ),
                   elevation: 0,
-                  textStyle: AppTypography.getSaveButtonText,
+                  textStyle: AppTypography.addUserSaveButtonText,
                 ),
               ),
             ),

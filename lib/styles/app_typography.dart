@@ -20,21 +20,18 @@ class AppTypography {
     fontFamily: googleSansFamily,
     fontSize: 25,
     fontWeight: FontWeight.w300,
-    // letterSpacing: -0.25,
     color: AppTheme.muted,
   );
   static TextStyle get getStartedMainWord => const TextStyle(
     fontFamily: googleSansFamily,
     fontSize: 30,
     fontWeight: FontWeight.w500,
-    // letterSpacing: -0.25,
     color: AppTheme.white,
   );
   static TextStyle get getStartedHeadline => const TextStyle(
     fontFamily: googleSansFamily,
     fontSize: 30,
     fontWeight: FontWeight.w700,
-    // letterSpacing: -0.25,
     height: 1.25,
     color: AppTheme.white,
   );
@@ -74,14 +71,14 @@ class AppTypography {
     letterSpacing: -0.25,
     color: AppTheme.white,
   );
-  static TextStyle get getSaveButtonText => const TextStyle(
+  static TextStyle get addUserSaveButtonText => const TextStyle(
     fontFamily: googleSansFamily,
     fontSize: 20,
     fontWeight: FontWeight.w500,
   );
 
   // Bottom Navigation Bar
-  static TextStyle get bottomNavBarItemText => const TextStyle(
+  static TextStyle get navBarMenuItemText => const TextStyle(
     fontFamily: googleSansFamily,
     fontSize: 15,
     fontWeight: FontWeight.w400,
@@ -89,26 +86,6 @@ class AppTypography {
   );
 
   // Dashboard Screen
-  static TextStyle get dashboardQuote => TextStyle(
-    fontFamily: googleSansFamily,
-    fontSize: 15,
-    fontWeight: FontWeight.w300,
-    color: AppTheme.white.withValues(alpha: 0.7),
-    fontStyle: FontStyle.italic,
-  );
-  static TextStyle get dashboardCardHeadingText => const TextStyle(
-    fontFamily: googleSansFamily,
-    fontSize: 20,
-    fontWeight: FontWeight.w500,
-    color: AppTheme.white,
-  );
-  static TextStyle get dashboardSeeAllPillText => const TextStyle(
-    fontFamily: googleSansFamily,
-    fontSize: 12.5,
-    fontWeight: FontWeight.w500,
-    color: AppTheme.primary,
-  );
-
   static TextStyle get dashboardHeadline => const TextStyle(
     fontFamily: googleSansFamily,
     fontSize: 22.5,
@@ -119,6 +96,55 @@ class AppTypography {
     fontFamily: googleSansFamily,
     fontSize: 17.5,
     fontWeight: FontWeight.w500,
+    color: AppTheme.textSecondary,
+  );
+  static TextStyle get dashboardCardHeading => const TextStyle(
+    fontFamily: googleSansFamily,
+    fontSize: 20,
+    fontWeight: FontWeight.w500,
+    color: AppTheme.white,
+  );
+  static TextStyle get dashboardPillLabel => const TextStyle(
+    fontFamily: googleSansFamily,
+    fontSize: 12.5,
+    fontWeight: FontWeight.w500,
+    color: AppTheme.primary,
+  );
+  static TextStyle get dashboardQuote => TextStyle(
+    fontFamily: googleSansFamily,
+    fontSize: 15,
+    fontWeight: FontWeight.w300,
+    color: AppTheme.white.withValues(alpha: 0.7),
+    fontStyle: FontStyle.italic,
+  );
+  static TextStyle get dashboardTileTitle => const TextStyle(
+    fontFamily: googleSansFamily,
+    fontSize: 15,
+    fontWeight: FontWeight.w600,
+    color: AppTheme.white,
+  );
+  static TextStyle get dashboardTileSubtitle => const TextStyle(
+    fontFamily: googleSansFamily,
+    fontSize: 12,
+    fontWeight: FontWeight.w400,
+    color: AppTheme.textSecondary,
+  );
+  static TextStyle get dashboardEmptyState => const TextStyle(
+    fontFamily: googleSansFamily,
+    fontSize: 14,
+    fontWeight: FontWeight.w400,
+    color: AppTheme.muted,
+  );
+  static TextStyle get chartAxisLabel => const TextStyle(
+    fontFamily: googleSansFamily,
+    fontSize: 12,
+    fontWeight: FontWeight.w400,
+    color: AppTheme.textSecondary,
+  );
+  static TextStyle get chartYAxisLabel => const TextStyle(
+    fontFamily: googleSansFamily,
+    fontSize: 10,
+    fontWeight: FontWeight.w400,
     color: AppTheme.textSecondary,
   );
 

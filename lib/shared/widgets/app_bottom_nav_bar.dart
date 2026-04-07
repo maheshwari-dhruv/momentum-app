@@ -123,7 +123,6 @@ class _NavItem extends StatelessWidget {
       borderRadius: BorderRadius.circular(10),
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 180),
-        margin: const EdgeInsets.symmetric(horizontal: 0),
         padding: const EdgeInsets.symmetric(vertical: 15),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
@@ -175,7 +174,7 @@ class _AddMenuTile extends StatelessWidget {
             Expanded(
               child: Text(
                 title,
-                style: AppTypography.bottomNavBarItemText,
+                style: AppTypography.navBarMenuItemText,
               ),
             ),
             AppIcons.navBarMenuForwardIcon,

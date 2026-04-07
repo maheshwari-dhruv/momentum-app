@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       locale: DevicePreview.locale(context),
       builder: DevicePreview.appBuilder,
       theme: AppTheme.theme,
-      home: const HomeScreen(title: 'Momentum - Task & Routine Planner'),
+      home: const HomeScreen(),
     );
   }
 }
