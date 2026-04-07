@@ -3,7 +3,26 @@ import 'package:flutter/material.dart';
 import 'add_new_category_screen.dart';
 
 class AddTaskScreen extends StatefulWidget {
-  const AddTaskScreen({super.key});
+  const AddTaskScreen({
+    super.key,
+    this.editTaskId,
+    this.initialName,
+    this.initialDescription,
+    this.initialPriority,
+    this.initialCategory,
+    this.initialDate,
+    this.initialTime,
+  });
+
+  final String? editTaskId;
+  final String? initialName;
+  final String? initialDescription;
+  final String? initialPriority;
+  final String? initialCategory;
+  final DateTime? initialDate;
+  final TimeOfDay? initialTime;
+
+  bool get isEditing => editTaskId != null;
 
   @override
   State<AddTaskScreen> createState() => _AddTaskScreenState();
@@ -19,12 +38,36 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
     'Work',
     'Shopping',
     'Fitness',
+    'Self-care',
   ];
 
   int _selectedPriorityIndex = 1;
   int _selectedCategoryIndex = 0;
   DateTime _selectedDate = DateTime.now();
   TimeOfDay _selectedTime = const TimeOfDay(hour: 10, minute: 0);
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.isEditing) {
+      _taskNameController.text = widget.initialName ?? '';
+      _taskDescriptionController.text = widget.initialDescription ?? '';
+      if (widget.initialPriority != null) {
+        final idx = _priorities.indexWhere(
+          (p) => p.toLowerCase() == widget.initialPriority!.toLowerCase(),
+        );
+        if (idx != -1) _selectedPriorityIndex = idx;
+      }
+      if (widget.initialCategory != null) {
+        final idx = _categories.indexWhere(
+          (c) => c.toLowerCase() == widget.initialCategory!.toLowerCase(),
+        );
+        if (idx != -1) _selectedCategoryIndex = idx;
+      }
+      _selectedDate = widget.initialDate ?? DateTime.now();
+      _selectedTime = widget.initialTime ?? const TimeOfDay(hour: 10, minute: 0);
+    }
+  }
 
   @override
   void dispose() {
@@ -50,7 +93,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                   ),
                   Expanded(
                     child: Text(
-                      'Add New Task',
+                      widget.isEditing ? 'Edit Task' : 'Add New Task',
                       textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.titleLarge?.copyWith(
                         color: Colors.white,
@@ -242,8 +285,10 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                             borderRadius: BorderRadius.circular(18),
                           ),
                         ),
-                        icon: const Icon(Icons.add_task_rounded),
-                        label: const Text('Create Task'),
+                        icon: Icon(widget.isEditing
+                            ? Icons.save_rounded
+                            : Icons.add_task_rounded),
+                        label: Text(widget.isEditing ? 'Save Changes' : 'Create Task'),
                       ),
                     ),
                   ],
@@ -320,18 +365,19 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
   }
 
   Future<void> _onCreateTaskPressed() async {
-    debugPrint('AddTaskScreen: create task button clicked');
-    final isSaved = await _saveTaskToDatabase();
+    debugPrint('AddTaskScreen: ${widget.isEditing ? "update" : "create"} task button clicked');
+    final isSaved = widget.isEditing
+        ? await _updateTaskInDatabase()
+        : await _saveTaskToDatabase();
     if (!mounted) return;
     if (isSaved) {
-      debugPrint('AddTaskScreen: task saved successfully, returning to task screen');
-      Navigator.of(context).pop();
+      Navigator.of(context).pop(true);
     }
   }
 
   Future<bool> _saveTaskToDatabase() async {
     // TODO: Implement task save logic.
-    debugPrint('AddTaskScreen: saving task with values');
+    debugPrint('AddTaskScreen: saving new task');
     debugPrint('taskName: ${_taskNameController.text}');
     debugPrint('description: ${_taskDescriptionController.text}');
     debugPrint('priority: ${_priorities[_selectedPriorityIndex]}');
@@ -339,6 +385,15 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
     if (mounted) {
       debugPrint('time: ${_selectedTime.format(context)}');
     }
+    debugPrint('category: ${_categories[_selectedCategoryIndex]}');
+    return true;
+  }
+
+  Future<bool> _updateTaskInDatabase() async {
+    // TODO: Implement task update logic.
+    debugPrint('AddTaskScreen: updating task ${widget.editTaskId}');
+    debugPrint('taskName: ${_taskNameController.text}');
+    debugPrint('priority: ${_priorities[_selectedPriorityIndex]}');
     debugPrint('category: ${_categories[_selectedCategoryIndex]}');
     return true;
   }

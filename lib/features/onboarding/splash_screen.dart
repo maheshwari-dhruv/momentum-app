@@ -13,6 +13,8 @@ class SplashScreen extends StatelessWidget {
         child: Center(
           child: Row(
             mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               AppIcons.splashTextIcon,
               const SizedBox(width: 5),

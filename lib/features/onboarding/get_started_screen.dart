@@ -60,11 +60,11 @@ class GetStartedScreen extends StatelessWidget {
                 iconAlignment: IconAlignment.end,
                 label: const Text('Get Started'),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: AppTheme.ctaDark,
+                  backgroundColor: AppTheme.primary,
                   foregroundColor: AppTheme.white,
                   padding: const EdgeInsets.symmetric(vertical: 20),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: BorderRadius.circular(40),
                   ),
                   elevation: 0,
                   textStyle: AppTypography.getStartedButtonText,

@@ -101,8 +101,8 @@ class _AddUserScreenState extends State<AddUserScreen> {
                   onPressed: _onCancelPressed,
                   icon: AppIcons.addUserCloseIcon,
                   style: IconButton.styleFrom(
-                    backgroundColor: AppTheme.white,
-                    foregroundColor: AppTheme.textPrimary,
+                    backgroundColor: AppTheme.surface,
+                    foregroundColor: AppTheme.white,
                     padding: const EdgeInsets.all(10),
                     minimumSize: Size.zero,
                     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
@@ -167,11 +167,11 @@ class _AddUserScreenState extends State<AddUserScreen> {
                 iconAlignment: IconAlignment.end,
                 label: const Text('Save User'),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: AppTheme.ctaDark,
+                  backgroundColor: AppTheme.primary,
                   foregroundColor: AppTheme.white,
                   padding: const EdgeInsets.symmetric(vertical: 20),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16),
+                    borderRadius: BorderRadius.circular(40),
                   ),
                   elevation: 0,
                   textStyle: AppTypography.getSaveButtonText,
@@ -204,25 +204,25 @@ class _AddUserScreenState extends State<AddUserScreen> {
           focusNode: focusNode,
           keyboardType: keyboardType,
           style: AppTypography.addUserTextFieldText,
-          cursorColor: AppTheme.textSecondary,
+          cursorColor: AppTheme.primary,
           decoration: InputDecoration(
             hintText: hint,
             hintStyle: TextStyle(color: AppTheme.muted.withValues(alpha: 0.75)),
             filled: true,
-            fillColor: AppTheme.white,
-            hoverColor: AppTheme.white,
-            focusColor: AppTheme.white,
+            fillColor: AppTheme.surface,
+            hoverColor: AppTheme.surface,
+            focusColor: AppTheme.surface,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(15),
               borderSide: BorderSide.none,
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(15),
-              borderSide: const BorderSide(color: AppTheme.white),
+              borderSide: const BorderSide(color: AppTheme.divider),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(15),
-              borderSide: const BorderSide(color: AppTheme.white),
+              borderSide: const BorderSide(color: AppTheme.primary),
             ),
             contentPadding: const EdgeInsets.symmetric(
               horizontal: 15,

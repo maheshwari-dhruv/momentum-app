@@ -1,5 +1,5 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:ionicons/ionicons.dart';
 
 import 'app_theme.dart';
 
@@ -7,32 +7,51 @@ class AppIcons {
   const AppIcons._();
 
   // Splash Screen
-  static Widget get splashTextIcon => const Icon(
-    Ionicons.flash_sharp,
-    color: AppTheme.iconPrimary,
+  static Widget get splashTextIcon => Icon(
+    CupertinoIcons.bolt_fill,
+    color: AppTheme.primary,
     size: 30,
   );
 
   // Get Started Screen
   static Widget get getStartedWorkoutIcon => const Icon(
-    Ionicons.barbell_sharp,
-    color: AppTheme.iconPrimary,
-    size: 35,
+    CupertinoIcons.flame,
+    color: AppTheme.primary,
+    size: 45,
   );
   static Widget get getStartedCtaIcon => const Icon(
-    Ionicons.arrow_forward_outline,
+    CupertinoIcons.arrow_right,
     color: AppTheme.white,
-    size: 20,
+    size: 25,
   );
 
   // Add User Screen
   static Widget get addUserCloseIcon => const Icon(
-    Ionicons.close,
-    size: 30,
+    CupertinoIcons.xmark,
+    size: 40,
   );
   static Widget get addUserSaveIcon => const Icon(
-    Ionicons.bookmark,
+    CupertinoIcons.bookmark_fill,
     color: AppTheme.white,
+    size: 25,
+  );
+
+  // Bottom Navigation Bar
+  static Widget get navBarMenuForwardIcon => const Icon(
+    CupertinoIcons.chevron_forward,
+    color: AppTheme.muted,
+    size: 20,
+  );
+  static Widget get bottomNavBarTasksIcon => const Icon(
+    CupertinoIcons.checkmark_square,
+    size: 25,
+  );
+  static Widget get bottomNavBarRoutinesIcon => const Icon(
+    CupertinoIcons.clock,
+    size: 25,
+  );
+  static Widget get bottomNavBarStatsIcon => const Icon(
+    CupertinoIcons.chart_bar,
     size: 25,
   );
 }

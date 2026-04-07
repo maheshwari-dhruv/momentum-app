@@ -5,66 +5,45 @@ import 'app_theme.dart';
 class AppTypography {
   const AppTypography._();
 
-  static const String fontFamily = 'AeonikTRIAL';
-
-  
-
-  // Dashboard Screen
-  static TextStyle get dashboardHeadline => const TextStyle(
-    fontFamily: fontFamily,
-    fontSize: 22.5,
-    fontWeight: FontWeight.w700,
-    color: Colors.white,
-    // color: Color(0xFF110600),
-  );
-  static TextStyle get dashboardSubtitle => TextStyle(
-    fontFamily: fontFamily,
-    fontSize: 17.5,
-    fontWeight: FontWeight.w500,
-    color: Colors.white,
-    // color: const Color(0xFF110600).withValues(alpha: 0.7),
-  );
-
   static const String googleSansFamily = 'GoogleSans';
 
   // Splash Screen
   static TextStyle get splashTitle => const TextStyle(
     fontFamily: googleSansFamily,
     fontSize: 25,
-    fontWeight: FontWeight.w700,
-    letterSpacing: -0.25,
-    color: AppTheme.textPrimary,
+    fontWeight: FontWeight.w500,
+    color: AppTheme.white,
   );
 
   // Get Started Screen
   static TextStyle get getStartedMutedWord => const TextStyle(
     fontFamily: googleSansFamily,
     fontSize: 25,
-    fontWeight: FontWeight.w400,
-    letterSpacing: -0.25,
+    fontWeight: FontWeight.w300,
+    // letterSpacing: -0.25,
     color: AppTheme.muted,
   );
   static TextStyle get getStartedMainWord => const TextStyle(
     fontFamily: googleSansFamily,
     fontSize: 30,
-    fontWeight: FontWeight.w700,
-    letterSpacing: -0.25,
-    color: AppTheme.textPrimary,
+    fontWeight: FontWeight.w500,
+    // letterSpacing: -0.25,
+    color: AppTheme.white,
   );
   static TextStyle get getStartedHeadline => const TextStyle(
     fontFamily: googleSansFamily,
     fontSize: 30,
     fontWeight: FontWeight.w700,
-    letterSpacing: -0.25,
+    // letterSpacing: -0.25,
     height: 1.25,
-    color: AppTheme.textPrimary,
+    color: AppTheme.white,
   );
   static TextStyle get getStartedBody => const TextStyle(
     fontFamily: googleSansFamily,
     fontSize: 15,
     fontWeight: FontWeight.w300,
     height: 1.25,
-    color: AppTheme.muted,
+    color: AppTheme.textSecondary,
   );
   static TextStyle get getStartedButtonText => const TextStyle(
     fontFamily: googleSansFamily,
@@ -79,7 +58,7 @@ class AppTypography {
     fontWeight: FontWeight.w700,
     letterSpacing: -0.25,
     height: 1.25,
-    color: AppTheme.textPrimary,
+    color: AppTheme.white,
   );
   static TextStyle get addUserFieldLabel => const TextStyle(
     fontFamily: googleSansFamily,
@@ -93,7 +72,7 @@ class AppTypography {
     fontSize: 15,
     fontWeight: FontWeight.w400,
     letterSpacing: -0.25,
-    color: AppTheme.textPrimary,
+    color: AppTheme.white,
   );
   static TextStyle get getSaveButtonText => const TextStyle(
     fontFamily: googleSansFamily,
@@ -101,25 +80,53 @@ class AppTypography {
     fontWeight: FontWeight.w500,
   );
 
+  // Bottom Navigation Bar
+  static TextStyle get bottomNavBarItemText => const TextStyle(
+    fontFamily: googleSansFamily,
+    fontSize: 15,
+    fontWeight: FontWeight.w400,
+    color: AppTheme.textPrimary,
+  );
+
+  // Dashboard Screen
+  static TextStyle get dashboardQuote => TextStyle(
+    fontFamily: googleSansFamily,
+    fontSize: 15,
+    fontWeight: FontWeight.w300,
+    color: AppTheme.white.withValues(alpha: 0.7),
+    fontStyle: FontStyle.italic,
+  );
+  static TextStyle get dashboardCardHeadingText => const TextStyle(
+    fontFamily: googleSansFamily,
+    fontSize: 20,
+    fontWeight: FontWeight.w500,
+    color: AppTheme.white,
+  );
+  static TextStyle get dashboardSeeAllPillText => const TextStyle(
+    fontFamily: googleSansFamily,
+    fontSize: 12.5,
+    fontWeight: FontWeight.w500,
+    color: AppTheme.primary,
+  );
+
+  static TextStyle get dashboardHeadline => const TextStyle(
+    fontFamily: googleSansFamily,
+    fontSize: 22.5,
+    fontWeight: FontWeight.w700,
+    color: AppTheme.white,
+  );
+  static TextStyle get dashboardSubtitle => const TextStyle(
+    fontFamily: googleSansFamily,
+    fontSize: 17.5,
+    fontWeight: FontWeight.w500,
+    color: AppTheme.textSecondary,
+  );
+
   static TextTheme get textTheme => _buildTextTheme(
     fontFamily: googleSansFamily,
-    bodyColor: const Color(0xFF262626),
-    displayColor: const Color(0xFF262626),
-    mutedColor: const Color(0xFF9A9A9A),
-  );
-
-  static TextTheme lightTextTheme = _buildTextTheme(
-    fontFamily: fontFamily,
-    bodyColor: const Color(0xFF111827),
-    displayColor: const Color(0xFF0F172A),
-    mutedColor: const Color(0xFF6B7280),
-  );
-
-  static TextTheme darkTextTheme = _buildTextTheme(
-    fontFamily: fontFamily,
-    bodyColor: const Color(0xFFF8FAFC),
-    displayColor: Colors.white,
-    mutedColor: const Color(0xFF94A3B8),
+    bodyColor: AppTheme.white,
+    displayColor: AppTheme.white,
+    mutedColor: AppTheme.muted,
   );
 
   static TextTheme _buildTextTheme({

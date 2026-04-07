@@ -5,32 +5,31 @@ import 'app_typography.dart';
 class AppTheme {
   const AppTheme._();
 
-  static const Color primary = Color(0xFFF29A68);
-  static const Color secondary = Color(0xFFF6B38B);
-  static const Color background = Color(0xFFF9F2EC);
-  static const Color surface = Color(0xFFFFF8F3);
-  static const Color textPrimary = Color(0xFF262626);
-  static const Color textSecondary = Color(0xFF5C5C5C);
-  static const Color muted = Color(0xFF9A9A9A);
-  static const Color divider = Color(0xFFE9DED6);
-  static const Color ctaDark = Color(0xFF7A4316);
-  static const Color iconPrimary = Color(0xFF262626);
+  static const Color primary = Color(0xFFFA5F1A);
+  static const Color background = Color(0xFF252525);
+  static const Color surface = Color(0xFF2F2F2F);
+  static const Color card = Color(0xFF353535);
+  static const Color textPrimary = Color(0xFFFFFFFF);
+  static const Color textSecondary = Color(0xFFB0B0B0);
+  static const Color muted = Color(0xFF6E6E6E);
+  static const Color divider = Color(0xFF3A3A3A);
   static const Color white = Colors.white;
+  static const Color softWhite = Color(0xFFF7F0F0);
 
   static ThemeData get theme => ThemeData(
     useMaterial3: true,
-    brightness: Brightness.light,
+    brightness: Brightness.dark,
     platform: TargetPlatform.iOS,
     splashFactory: NoSplash.splashFactory,
     highlightColor: Colors.transparent,
     scaffoldBackgroundColor: background,
     canvasColor: surface,
-    colorScheme: const ColorScheme.light(
+    colorScheme: const ColorScheme.dark(
       primary: primary,
-      secondary: secondary,
+      secondary: primary,
       surface: surface,
-      onPrimary: Colors.white,
-      onSecondary: Colors.white,
+      onPrimary: white,
+      onSecondary: white,
       onSurface: textPrimary,
     ),
     textTheme: AppTypography.textTheme,
@@ -40,19 +39,19 @@ class AppTheme {
       elevation: 0,
       centerTitle: true,
     ),
-    cardColor: surface,
+    cardColor: card,
     dividerColor: divider,
     iconTheme: const IconThemeData(color: textPrimary),
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
       backgroundColor: surface,
-      selectedItemColor: ctaDark,
+      selectedItemColor: primary,
       unselectedItemColor: muted,
       type: BottomNavigationBarType.fixed,
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        backgroundColor: ctaDark,
-        foregroundColor: Colors.white,
+        backgroundColor: primary,
+        foregroundColor: white,
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
